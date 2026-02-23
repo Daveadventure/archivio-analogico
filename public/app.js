@@ -7,9 +7,11 @@ const empty = document.getElementById("empty");
 const count = document.getElementById("count");
 const moreBtn = document.getElementById("more");
 const statusEl = document.getElementById("status");
+const loaderEl = document.getElementById("loader");
 
 function setStatus(msg) {
-  if (statusEl) statusEl.textContent = msg;
+  // status box rimosso: manteniamo compatibilità senza mostrare debug
+  console.log(msg);
 }
 
 window.addEventListener("error", (e) => {
@@ -53,7 +55,8 @@ init();
 
 async function init() {
   try {
-    setStatus("Stato: avvio…");
+    if (loaderEl) loaderEl.textContent = "Caricamento collezione…";
+    if (loaderEl) loaderEl.classList.remove("hidden");
 
     setStatus("Stato: carico filtri…");
     await loadFilters();
@@ -64,10 +67,12 @@ async function init() {
     setStatus(`Stato: collezione caricata (${collection.length} dischi). Render…`);
     applyAll();
 
+    if (loaderEl) loaderEl.classList.add("hidden");
+
     setStatus(`Stato: render ok (${filtered.length} risultati).`);
     wire();
   } catch (e) {
-    setStatus("ERRORE: " + (e?.message || String(e)));
+    if (loaderEl) { loaderEl.textContent = "Errore: " + (e?.message || String(e)); loaderEl.classList.remove("hidden"); }
   }
 }
 

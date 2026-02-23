@@ -278,3 +278,17 @@ hr.sep{
   margin:18px 0;
 }
 .smallmuted{ color:var(--muted); font-size:14px; }
+
+
+.loader{
+  margin-top: 26px;
+  text-align:center;
+  color: var(--muted);
+  font-style: italic;
+}
+.footerlink{
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+.footerlink:hover{ text-decoration: underline; }
