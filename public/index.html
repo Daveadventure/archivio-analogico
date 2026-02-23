@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Archivio Analogico</title>
+  <link rel="icon" href="/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="hero">
+    <div class="masthead">
+      <div class="logo">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="wording">
+          <div class="brand">Archivio Analogico</div>
+          <div class="subtitle">collezione vinili di DAVE1971 (Discogs)</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <input id="search" type="text" placeholder="Cerca artista o titolo…" autocomplete="off" />
+        <select id="genre"><option value="">Tutti i generi</option></select>
+        <select id="style"><option value="">Tutti gli stili</option></select>
+        <select id="sort">
+          <option value="added">Ordina: aggiunti (default)</option>
+          <option value="artist">Ordina: artista</option>
+          <option value="title">Ordina: titolo</option>
+          <option value="year_desc">Ordina: anno ↓</option>
+          <option value="year_asc">Ordina: anno ↑</option>
+        </select>
+      </div>
+
+      <div class="meta">
+        <span id="count">—</span>
+        <span class="dot">•</span>
+        <span class="hint">Clicca una copertina per i dettagli</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="grid" class="grid"></div>
+
+    <div id="status" class="empty">Stato: in attesa…</div>
+
+    <div class="loadmore">
+      <button id="more" class="more hidden">Carica altri</button>
+    </div>
+
+    <div id="empty" class="empty hidden">
+      Nessun risultato. Prova a cambiare filtro o ricerca.
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>Fatto con amore e un po’ di polvere sui dischi.</span>
+  </footer>
+
+  <script src="app.js?v=2"></script>
+</body>
+</html>

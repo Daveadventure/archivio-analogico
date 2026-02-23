@@ -1,0 +1,12 @@
+{
+  "name": "vinili-discogs",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "echo Build step not required"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-fetch": "^3.3.2"
+  }
+}
