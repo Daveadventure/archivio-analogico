@@ -271,7 +271,7 @@ async function loadCollection(){
 }
 
 function wire(){
-  const applyDebounced = debounce(()=>{ limit=200; applyAll(); }, 220);
+  const applyDebounced = debounce(()=>{ limit=200; applyAll(); }, 120);
   const applyNow = ()=>{ limit=200; applyAll(); };
 
   elSearch?.addEventListener("input", applyDebounced);

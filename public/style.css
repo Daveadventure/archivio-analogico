@@ -492,3 +492,60 @@ background:rgba(255,255,255,.8);
 cursor:pointer;
 }
 
+
+
+/* ===== VINYL PREMIUM EFFECT ===== */
+
+.card{
+transition: transform .35s cubic-bezier(.2,.8,.2,1),
+            box-shadow .35s ease,
+            filter .35s ease;
+}
+
+.card:hover{
+transform: translateY(-6px) scale(1.02);
+box-shadow:
+0 18px 45px rgba(0,0,0,.25),
+0 6px 18px rgba(0,0,0,.18);
+filter: saturate(1.05);
+}
+
+/* Luce dinamica effetto vinile */
+.card::after{
+content:"";
+position:absolute;
+inset:0;
+border-radius:18px;
+background:linear-gradient(
+120deg,
+rgba(255,255,255,0.25) 0%,
+rgba(255,255,255,0.05) 40%,
+rgba(255,255,255,0.0) 60%
+);
+opacity:0;
+transition: opacity .4s ease;
+pointer-events:none;
+}
+
+.card:hover::after{
+opacity:.6;
+}
+
+
+
+/* progress animation */
+.progress > div{
+transition: width .6s cubic-bezier(.2,.8,.2,1);
+}
+
+
+
+/* vinyl subtle motion */
+.card img{
+transition: transform .5s ease;
+}
+
+.card:hover img{
+transform: rotate(-0.8deg) scale(1.02);
+}
+
