@@ -60,6 +60,11 @@ async function fetchJson(url, tries=2) {
 }
 
 function updateLoader(extra=""){
+  const bar = document.getElementById("progressBar");
+  if (bar && totalItems > 0) {
+    const pct = Math.max(0, Math.min(100, Math.round((loadedItems / totalItems) * 100)));
+    bar.style.width = pct + "%";
+  }
   if (!loaderEl) return;
   if (totalItems > 0) loaderEl.textContent = `Caricati ${loadedItems} / ${totalItems}… ${extra}`.trim();
   else loaderEl.textContent = `Caricamento collezione… ${extra}`.trim();

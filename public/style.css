@@ -337,3 +337,98 @@ body.view-list .badges{
   backdrop-filter: blur(6px);
 }
 .reset:hover{ transform: translateY(-1px); }
+
+
+/* === ARCHIVIO ANALOGICO THEME (retro analogico) === */
+@import url('https://fonts.googleapis.com/css2?family=Baumans&display=swap');
+
+:root{
+  --paper: #f4f0e6;
+  --ink: #151515;
+  --accent: #ff4d2e;
+  --muted: rgba(0,0,0,.65);
+  --card: rgba(255,255,255,.55);
+  --line: rgba(0,0,0,.12);
+  --radius: 18px;
+}
+
+html, body{ height: 100%; }
+body{
+  color: var(--ink);
+  background: var(--paper);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(0,0,0,.10), transparent 60%),
+    radial-gradient(900px 700px at 90% 30%, rgba(0,0,0,.08), transparent 60%),
+    repeating-radial-gradient(circle at 20% 40%, rgba(0,0,0,.018) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+  opacity: .8;
+}
+
+.brand, .hero h1{
+  font-family: "Baumans", ui-sans-serif, system-ui;
+  letter-spacing: .5px;
+}
+
+.hero{
+  margin: 18px 0 10px;
+  padding: 18px 16px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
+}
+.hero h1{
+  margin: 0 0 6px;
+  font-size: 30px;
+  line-height: 1.05;
+}
+.hero p{
+  margin: 0;
+  color: var(--muted);
+}
+
+.progress{
+  margin-top: 12px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.08);
+  overflow: hidden;
+}
+.progress > div{
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.card{
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.6);
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+}
+.cover img{ border-radius: 14px; }
+
+body.view-list .card{
+  display: grid;
+  grid-template-columns: 86px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+body.view-list .cover{ width: 86px; }
+body.view-list .info{ padding: 6px 10px; }
+
+.footer{
+  margin: 26px 0 10px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  text-align: center;
+}

@@ -1,28 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Dettaglio vinile</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dettaglio — Archivio Analogico</title>
+  <link rel="stylesheet" href="/style.css?v=31" />
 </head>
-
 <body>
-  <header class="topbar">
-    <a class="back" href="/">← Torna alla collezione</a>
-  </header>
+  <main class="container">
+    <div class="hero">
+      <h1 class="brand">Archivio Analogico</h1>
+      <p>Dettaglio disco</p>
+      <div class="progress"><div id="progressBar" style="width:100%"></div></div>
+    </div>
 
-  <main class="wrap">
-    <section id="detail" class="detail">
-      <div class="loading">Caricamento…</div>
-    </section>
+    <a href="/" style="display:inline-block; margin:10px 0; color:var(--ink); text-decoration:none; border:1px solid var(--line); padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.55);">← Torna alla collezione</a>
+
+    <div id="detail" class="detail"></div>
+    <div id="detailError" class="loader hidden"></div>
+
+    <footer class="footer">Life has surface noise (John Peel)</footer>
   </main>
 
-  <script src="detail.js"></script>
+  <script src="/detail.js?v=31"></script>
 </body>
 </html>
