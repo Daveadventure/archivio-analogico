@@ -1,3 +1,11 @@
+// DEBUG STAMP (rimuovibile)
+try {
+  const dbg = window.__AA_DEBUG__;
+  if (dbg) dbg("DEBUG: app.js caricato ✅");
+  const loader = document.getElementById("loader");
+  if (loader) loader.textContent = "JS avviato…";
+} catch {}
+
 let collection = [];
 let filtered = [];
 let limit = 200;
