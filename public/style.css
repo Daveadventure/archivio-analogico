@@ -292,3 +292,77 @@ hr.sep{
   font-weight: 600;
 }
 .footerlink:hover{ text-decoration: underline; }
+
+
+.controls input[type="number"]{
+  width: 110px;
+}
+.toggle{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  user-select:none;
+  white-space:nowrap;
+  color: var(--muted);
+  font-weight: 600;
+}
+.toggle input{
+  width: 16px;
+  height: 16px;
+}
+.card{
+  position: relative;
+}
+.favbtn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  border:0;
+  cursor:pointer;
+  font-size:18px;
+  line-height:1;
+  padding:8px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+}
+.favbtn:hover{ transform: translateY(-1px); }
+
+
+/* Vista lista */
+body.view-list .grid{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+body.view-list .card{
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 14px;
+}
+body.view-list .cover{
+  aspect-ratio: 1 / 1;
+}
+body.view-list .cover img{
+  width: 92px;
+  height: 92px;
+  object-fit: cover;
+}
+body.view-list .badges{
+  margin-top: 6px;
+}
+
+
+.reset{
+  border: 0;
+  cursor: pointer;
+  padding: 10px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(0,0,0,.12);
+  backdrop-filter: blur(6px);
+}
+.reset:hover{ transform: translateY(-1px); }

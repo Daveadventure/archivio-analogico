@@ -26,14 +26,27 @@
 
       <div class="controls">
         <input id="search" type="text" placeholder="Cerca artista o titolo…" autocomplete="off" />
+        <input id="yearFrom" type="number" inputmode="numeric" placeholder="Anno da" min="1900" max="2100" />
+        <input id="yearTo" type="number" inputmode="numeric" placeholder="Anno a" min="1900" max="2100" />
+        <label class="toggle">
+          <input id="onlyFavs" type="checkbox" />
+          <span>Solo preferiti ⭐</span>
+        </label>
+    
         <select id="genre"><option value="">Tutti i generi</option></select>
         <select id="style"><option value="">Tutti gli stili</option></select>
+        <select id="decade"><option value="">Tutti i decenni</option></select>
         <select id="sort">
+          
           <option value="added">Ordina: aggiunti (default)</option>
           <option value="artist">Ordina: artista</option>
           <option value="title">Ordina: titolo</option>
           <option value="year_desc">Ordina: anno ↓</option>
           <option value="year_asc">Ordina: anno ↑</option>
+        </select>
+        <select id="view">
+          <option value="grid">Vista: griglia</option>
+          <option value="list">Vista: lista</option>
         </select>
       </div>
 
@@ -59,11 +72,8 @@
   </main>
 
   <footer class="footer">
-    <a class="footerlink" href="/about.html">Chi sono</a>
     <span class="dot">•</span>
-    <a class="footerlink" href="https://www.discogs.com/user/DAVE1971" target="_blank" rel="noopener">Discogs</a>
     <span class="dot">•</span>
-    <a class="footerlink" href="/api/collection?refresh=1">Aggiorna collezione</a>
 
     <span>Fatto con amore e un po’ di polvere sui dischi.</span>
   </footer>

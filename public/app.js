@@ -6,6 +6,34 @@ const grid = document.getElementById("grid");
 const empty = document.getElementById("empty");
 const count = document.getElementById("count");
 const moreBtn = document.getElementById("more");
+
+const FAV_KEY = "aa_favs_v1";
+function loadFavs() {
+  try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]")); }
+  catch { return new Set(); }
+}
+function saveFavs(set) {
+  localStorage.setItem(FAV_KEY, JSON.stringify(Array.from(set)));
+}
+let favs = loadFavs();
+
+const VIEW_KEY = "aa_view_v1";
+function loadView(){
+  return localStorage.getItem(VIEW_KEY) || "grid";
+}
+function saveView(v){
+  localStorage.setItem(VIEW_KEY, v);
+}
+function applyView(v){
+  document.body.classList.toggle("view-list", v === "list");
+}
+
+
+function debounce(fn, ms=250){
+  let t=null;
+  return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), ms); };
+}
+
 const statusEl = document.getElementById("status");
 const loaderEl = document.getElementById("loader");
 
@@ -61,8 +89,18 @@ async function init() {
     setStatus("Stato: carico filtri…");
     await loadFilters();
 
+    // Vista (grid/list) persistente
+    const viewEl = document.getElementById("view");
+    if (viewEl) {
+      const v = loadView();
+      viewEl.value = v;
+      applyView(v);
+    }
+
     setStatus("Stato: carico collezione (prima volta può essere lenta)…");
     await loadCollection();
+
+    populateDecades(collection);
 
     setStatus(`Stato: collezione caricata (${collection.length} dischi). Render…`);
     applyAll();
@@ -77,7 +115,48 @@ async function init() {
 }
 
 function wire() {
-  const resetAndApply = () => { limit = 200; applyAll(); };
+  const applyDebounced = debounce(() => { limit = 200; applyAll();
+  document.getElementById("reset").addEventListener("click", () => {
+    // reset UI
+    document.getElementById("search").value = "";
+    document.getElementById("genre").value = "";
+    document.getElementById("style").value = "";
+    document.getElementById("decade").value = "";
+    document.getElementById("yearFrom").value = "";
+    document.getElementById("yearTo").value = "";
+    document.getElementById("onlyFavs").checked = false;
+
+    // reset sort + vista (default)
+    document.getElementById("sort").value = "added";
+    const viewEl = document.getElementById("view");
+    if (viewEl) {
+      viewEl.value = "grid";
+      applyView("grid");
+      saveView("grid");
+    }
+
+    limit = 200;
+    applyAll();
+  });
+
+}
+, 220);
+  const applyNow = () => { limit = 200; applyAll(); };
+
+  document.getElementById("search").addEventListener("input", applyDebounced);
+  document.getElementById("genre").addEventListener("change", applyNow);
+  document.getElementById("style").addEventListener("change", applyNow);
+  document.getElementById("sort").addEventListener("change", applyNow);
+  document.getElementById("yearFrom").addEventListener("input", applyDebounced);
+  document.getElementById("yearTo").addEventListener("input", applyDebounced);
+  document.getElementById("onlyFavs").addEventListener("change", applyNow);
+
+  moreBtn.addEventListener("click", () => {
+    limit += 200;
+    render(filtered);
+  });
+}
+;
 
   document.getElementById("search").addEventListener("input", resetAndApply);
   document.getElementById("genre").addEventListener("change", resetAndApply);
@@ -95,6 +174,7 @@ async function loadFilters() {
 
   const genreEl = document.getElementById("genre");
   const styleEl = document.getElementById("style");
+  const decadeEl = document.getElementById("decade");
 
   (data.genres || []).forEach(g => {
     const opt = document.createElement("option");
@@ -125,6 +205,13 @@ function applyAll() {
   const genre = document.getElementById("genre").value;
   const style = document.getElementById("style").value;
   const sort = document.getElementById("sort").value;
+  const decade = document.getElementById("decade").value;
+
+  const yearFromRaw = document.getElementById("yearFrom").value;
+  const yearToRaw = document.getElementById("yearTo").value;
+  const yearFrom = yearFromRaw ? parseInt(yearFromRaw, 10) : null;
+  const yearTo = yearToRaw ? parseInt(yearToRaw, 10) : null;
+  const onlyFavs = document.getElementById("onlyFavs").checked;
 
   filtered = collection.filter(item => {
     const inQuery =
@@ -135,7 +222,15 @@ function applyAll() {
     const inGenre = !genre || (item.genres || []).includes(genre);
     const inStyle = !style || (item.styles || []).includes(style);
 
-    return inQuery && inGenre && inStyle;
+    const y = item.year ? parseInt(item.year, 10) : null;
+
+    const inYearFrom = yearFrom == null || (y != null && y >= yearFrom);
+    const inYearTo = yearTo == null || (y != null && y <= yearTo);
+    const inFav = !onlyFavs || favs.has(String(item.release_id));
+
+    const inDecade = !decade || (y != null && Math.floor(y/10)*10 === parseInt(decade,10));
+
+    return inQuery && inGenre && inStyle && inYearFrom && inYearTo && inFav && inDecade;
   });
 
   filtered = sortItems(filtered, sort);
@@ -199,4 +294,29 @@ function escapeHtml(str) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+
+function populateDecades(items){
+  const decadeEl = document.getElementById("decade");
+  if (!decadeEl) return;
+
+  const set = new Set();
+  for (const it of items){
+    const y = it.year ? parseInt(it.year, 10) : null;
+    if (!y) continue;
+    const d = Math.floor(y / 10) * 10;
+    set.add(d);
+  }
+
+  const decades = Array.from(set).sort((a,b)=>a-b);
+
+  // reset (lasciando la prima opzione)
+  decadeEl.innerHTML = '<option value="">Tutti i decenni</option>';
+  for (const d of decades){
+    const opt = document.createElement("option");
+    opt.value = String(d);
+    opt.textContent = `${d}s`;
+    decadeEl.appendChild(opt);
+  }
 }
