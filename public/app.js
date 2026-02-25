@@ -335,3 +335,14 @@ function wire(){
     if (loaderEl) loaderEl.textContent = "Errore: " + (e?.message || String(e));
   }
 })();
+
+
+// ===== DARK MODE TOGGLE =====
+document.addEventListener("DOMContentLoaded", ()=>{
+  const btn=document.getElementById("darkToggle");
+  if(!btn) return;
+
+  btn.addEventListener("click", ()=>{
+    document.body.classList.toggle("darkMode");
+  });
+});

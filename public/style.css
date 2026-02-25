@@ -611,3 +611,77 @@ transform: rotate(-0.8deg) scale(1.02);
 @media (prefers-reduced-motion: reduce) {
   .card, .card::after, .card img, .progress > div { transition: none !important; }
 }
+
+
+/* ===== VINYL SLEEVE FRAME ===== */
+
+.card{
+border:1px solid rgba(0,0,0,.15);
+background:linear-gradient(145deg,
+rgba(255,255,255,.95),
+rgba(245,245,245,.85));
+padding:6px;
+}
+
+.card img{
+border-radius:12px;
+}
+
+
+
+/* ===== CARD GRAIN ===== */
+
+.card::before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:inherit;
+background:repeating-radial-gradient(
+circle at 20% 30%,
+rgba(0,0,0,.015) 0 1px,
+transparent 1px 3px
+);
+pointer-events:none;
+mix-blend-mode:multiply;
+opacity:.4;
+}
+
+
+
+/* ===== LISTENING ROOM MODE ===== */
+
+body.darkMode{
+background:#0f0f12;
+color:#e5e5e5;
+}
+
+body.darkMode .card{
+background:linear-gradient(145deg,
+rgba(30,30,35,.95),
+rgba(22,22,28,.85));
+border:1px solid rgba(255,255,255,.08);
+}
+
+body.darkMode .filters input,
+body.darkMode .filters select,
+body.darkMode .filters button{
+background:rgba(40,40,45,.8);
+color:#e5e5e5;
+border:1px solid rgba(255,255,255,.1);
+}
+
+body.darkMode .topVinylStrip{
+filter:brightness(.7);
+}
+
+
+
+/* ===== VINYL GLOW ===== */
+
+.card:hover{
+box-shadow:
+0 0 0 1px rgba(255,255,255,.05),
+0 25px 60px rgba(0,0,0,.35),
+0 8px 25px rgba(0,0,0,.25);
+}
+
