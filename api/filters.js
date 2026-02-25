@@ -5,10 +5,6 @@ const DISCOGS_TOKEN = process.env.DISCOGS_TOKEN;
 const USERNAME = process.env.DISCOGS_USERNAME;
 const USER_AGENT = "ViniliDiscogsSite/1.0";
 
-let CACHE = null;
-let CACHE_AT = 0;
-const TTL_MS = 6 * 60 * 60 * 1000; // 6 ore
-
 function headers() {
   return {
     "User-Agent": USER_AGENT,
@@ -16,26 +12,11 @@ function headers() {
   };
 }
 
-async function fetchAllCollectionRaw() {
-  const perPage = 100;
-  let page = 1;
-  let all = [];
-
-  while (true) {
-    const url = `https://api.discogs.com/users/${USERNAME}/collection/folders/0/releases?per_page=${perPage}&page=${page}`;
-    const resp = await fetch(url, { headers: headers() });
-    const data = await resp.json();
-
-    if (!resp.ok) throw new Error(data?.message || "Errore Discogs collection");
-
-    all = all.concat(data.releases || []);
-
-    const pages = data?.pagination?.pages || 1;
-    if (page >= pages) break;
-    page++;
-  }
-
-  return all;
+async function safeJson(resp) {
+  const txt = await resp.text();
+  if (!txt) return { __empty: true };
+  try { return JSON.parse(txt); }
+  catch { return { __notJson: true, __text: txt.slice(0, 300) }; }
 }
 
 export default async function handler(req, res) {
@@ -43,31 +24,37 @@ export default async function handler(req, res) {
     if (!DISCOGS_TOKEN) return res.status(500).json({ error: "DISCOGS_TOKEN mancante" });
     if (!USERNAME) return res.status(500).json({ error: "DISCOGS_USERNAME mancante" });
 
-    const now = Date.now();
-    if (CACHE && (now - CACHE_AT) < TTL_MS) {
-      return res.status(200).json(CACHE);
+    const url = new URL(req.url, "http://localhost");
+    const pagesWanted = Math.min(5, Math.max(1, parseInt(url.searchParams.get("pages") || "2", 10) || 2));
+    const perPage = 100;
+
+    const genres = new Set();
+    const styles = new Set();
+
+    for (let page = 1; page <= pagesWanted; page++) {
+      const api = `https://api.discogs.com/users/${USERNAME}/collection/folders/0/releases?per_page=${perPage}&page=${page}`;
+      const resp = await fetch(api, { headers: headers() });
+      const data = await safeJson(resp);
+
+      if (!resp.ok) {
+        const msg = data?.message || (data?.__empty ? "Risposta vuota da Discogs" : null) || `HTTP ${resp.status}`;
+        return res.status(resp.status).json({ error: msg });
+      }
+      if (data?.__empty) return res.status(502).json({ error: "Risposta vuota da Discogs" });
+      if (data?.__notJson) return res.status(502).json({ error: "Risposta non-JSON da Discogs", detail: data.__text });
+
+      for (const it of (data.releases || [])) {
+        const info = it.basic_information || {};
+        for (const g of (info.genres || [])) if (g) genres.add(String(g));
+        for (const st of (info.styles || [])) if (st) styles.add(String(st));
+      }
     }
 
-    const all = await fetchAllCollectionRaw();
-    const genreSet = new Set();
-    const styleSet = new Set();
-
-    for (const item of all) {
-      const info = item.basic_information || {};
-      (info.genres || []).forEach(g => genreSet.add(g));
-      (info.styles || []).forEach(s => styleSet.add(s));
-    }
-
-    const payload = {
-      genres: Array.from(genreSet).sort((a,b) => a.localeCompare(b)),
-      styles: Array.from(styleSet).sort((a,b) => a.localeCompare(b))
-    };
-
-    CACHE = payload;
-    CACHE_AT = Date.now();
-
-    res.status(200).json(payload);
+    return res.status(200).json({
+      genres: Array.from(genres).sort((a,b)=>a.localeCompare(b)),
+      styles: Array.from(styles).sort((a,b)=>a.localeCompare(b))
+    });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    return res.status(500).json({ error: e.message });
   }
 }
