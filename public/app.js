@@ -209,7 +209,7 @@ const lpCheck = !elLpOnly?.checked ||
 
   const sort = elSort?.value || "added";
   filtered = sortItems(base, sort);
-  requestAnimationFrame(()=>render(filtered));
+  render(filtered);
 }
 
 async function loadFilters(){
@@ -312,14 +312,14 @@ function wire(){
 
   moreBtn?.addEventListener("click", ()=>{
     limit += 200;
-    requestAnimationFrame(()=>render(filtered));
+    render(filtered);
   });
 
   window.addEventListener("scroll", ()=>{
     const nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 700);
     if (nearBottom && moreBtn && !moreBtn.classList.contains("hidden")){
       limit += 200;
-      requestAnimationFrame(()=>render(filtered));
+      render(filtered);
     }
   });
 }
