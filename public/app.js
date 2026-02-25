@@ -1,6 +1,8 @@
 let collection = [];
 let filtered = [];
 let limit = 200;
+let totalItems = 0;
+let loadedItems = 0;
 
 const grid = document.getElementById("grid");
 const empty = document.getElementById("empty");
@@ -222,11 +224,61 @@ async function loadFilters() {
 }
 
 async function loadCollection() {
-  // Caricamento paginato: evita timeout su Vercel
+  // Caricamento paginato NON bloccante: mostra subito e poi continua in background
   const perPage = 100;
 
-  // prima pagina
+  updateLoaderProgress("");
+
   const first = await fetchJson(`/api/collection?page=1&per_page=${perPage}`, 2);
+  const page1 = Array.isArray(first.releases) ? first.releases : [];
+  const pag = first.pagination || {};
+  const pages = parseInt(pag.pages || 1, 10);
+  totalItems = parseInt(pag.items || 0, 10) || 0;
+
+  collection = page1;
+  loadedItems = collection.length;
+  filtered = [...collection];
+
+  // aggiorna menu derivati (decenni/label/formati) e render immediato
+  if (typeof populateDecades === "function") populateDecades(collection);
+  if (typeof populateLabels === "function") populateLabels(collection);
+  if (typeof populateFormats === "function") populateFormats(collection);
+
+  applyAll(); // <-- MOSTRA SUBITO I VINILI
+  updateLoaderProgress("");
+
+  // continua in background senza bloccare init
+  (async () => {
+    for (let page = 2; page <= pages; page++) {
+      try {
+        updateLoaderProgress(`(pagina ${page}/${pages})`);
+        const data = await fetchJson(`/api/collection?page=${page}&per_page=${perPage}`, 2);
+        const chunk = Array.isArray(data.releases) ? data.releases : [];
+
+        if (chunk.length) {
+          collection = collection.concat(chunk);
+          loadedItems = collection.length;
+
+          if (typeof populateDecades === "function") populateDecades(collection);
+          if (typeof populateLabels === "function") populateLabels(collection);
+          if (typeof populateFormats === "function") populateFormats(collection);
+
+          // Manteniamo filtri/ordinamento correnti
+          applyAll();
+        }
+
+        await new Promise(r => setTimeout(r, 140));
+      } catch {
+        // non blocchiamo tutto se una pagina fallisce
+        await new Promise(r => setTimeout(r, 250));
+      }
+    }
+
+    // finito: nascondi loader
+    const el = document.getElementById("loader");
+    if (el) el.classList.add("hidden");
+  })();
+}`, 2);
   const page1 = Array.isArray(first.releases) ? first.releases : [];
   const pag = first.pagination || {};
   const pages = parseInt(pag.pages || 1, 10);
@@ -428,5 +480,16 @@ function populateFormats(items){
     opt.value = f;
     opt.textContent = f;
     el.appendChild(opt);
+  }
+}
+
+
+function updateLoaderProgress(extra=""){
+  const el = document.getElementById("loader");
+  if (!el) return;
+  if (totalItems > 0){
+    el.textContent = `Caricati ${loadedItems} / ${totalItems}… ${extra}`.trim();
+  } else {
+    el.textContent = `Caricamento collezione… ${extra}`.trim();
   }
 }
