@@ -16,6 +16,7 @@ const elFormat = document.getElementById("format");
 const elYearFrom = document.getElementById("yearFrom");
 const elYearTo = document.getElementById("yearTo");
 const elSort = document.getElementById("sort");
+const elLpOnly = document.getElementById("lpOnly");
 const elView = document.getElementById("view");
 const elReset = document.getElementById("reset");
 
@@ -185,7 +186,12 @@ function applyAll(){
   const yf = yfRaw ? parseInt(yfRaw,10) : null;
   const yt = ytRaw ? parseInt(ytRaw,10) : null;
 
-  const base = collection.filter(item=>{
+  
+const base = collection.filter(item=>{
+
+const lpCheck = !elLpOnly?.checked ||
+(item.formats||[]).some(f => f.toLowerCase().includes("lp"));
+
     const inQuery = !q || (String(item.artist||"").toLowerCase().includes(q) || String(item.title||"").toLowerCase().includes(q));
     const inGenre = !g || (item.genres||[]).includes(g);
     const inStyle = !st || (item.styles||[]).includes(st);
@@ -198,12 +204,12 @@ function applyAll(){
     const inLabel = !label || (item.labels||[]).includes(label);
     const inFormat = !format || (item.formats||[]).includes(format);
 
-    return inQuery && inGenre && inStyle && inYearFrom && inYearTo && inDecade && inLabel && inFormat;
+    return inQuery && inGenre && inStyle && inYearFrom && inYearTo && inDecade && inLabel && inFormat && lpCheck;
   });
 
   const sort = elSort?.value || "added";
   filtered = sortItems(base, sort);
-  render(filtered);
+  requestAnimationFrame(()=>render(filtered));
 }
 
 async function loadFilters(){
@@ -306,14 +312,14 @@ function wire(){
 
   moreBtn?.addEventListener("click", ()=>{
     limit += 200;
-    render(filtered);
+    requestAnimationFrame(()=>render(filtered));
   });
 
   window.addEventListener("scroll", ()=>{
     const nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 700);
     if (nearBottom && moreBtn && !moreBtn.classList.contains("hidden")){
       limit += 200;
-      render(filtered);
+      requestAnimationFrame(()=>render(filtered));
     }
   });
 }

@@ -1,3 +1,4 @@
+html{scroll-behavior:smooth;}
 @import url("https://fonts.googleapis.com/css2?family=Monoton&display=swap");
 :root{
   --bg:#f4efe6;
@@ -745,5 +746,18 @@ to{
 transform:translateY(0);
 opacity:1;
 }
+}
+
+
+
+/* ===== FILTER FADE ===== */
+
+.card{
+animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(8px);}
+to{opacity:1; transform:translateY(0);}
 }
 
