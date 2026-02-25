@@ -101,6 +101,8 @@ async function init() {
     await loadCollection();
 
     populateDecades(collection);
+    populateLabels(collection);
+    populateFormats(collection);
 
     setStatus(`Stato: collezione caricata (${collection.length} dischi). Render…`);
     applyAll();
@@ -117,28 +119,22 @@ async function init() {
 function wire() {
   const applyDebounced = debounce(() => { limit = 200; applyAll();
   document.getElementById("reset").addEventListener("click", () => {
-    // reset UI
     document.getElementById("search").value = "";
     document.getElementById("genre").value = "";
     document.getElementById("style").value = "";
     document.getElementById("decade").value = "";
+    document.getElementById("label").value = "";
+    document.getElementById("format").value = "";
     document.getElementById("yearFrom").value = "";
     document.getElementById("yearTo").value = "";
     document.getElementById("onlyFavs").checked = false;
 
-    // reset sort + vista (default)
+    // reset sort (ma NON tocca la vista scelta)
     document.getElementById("sort").value = "added";
-    const viewEl = document.getElementById("view");
-    if (viewEl) {
-      viewEl.value = "grid";
-      applyView("grid");
-      saveView("grid");
-    }
 
     limit = 200;
     applyAll();
   });
-
 }
 , 220);
   const applyNow = () => { limit = 200; applyAll(); };
@@ -206,6 +202,8 @@ function applyAll() {
   const style = document.getElementById("style").value;
   const sort = document.getElementById("sort").value;
   const decade = document.getElementById("decade").value;
+  const label = document.getElementById("label").value;
+  const format = document.getElementById("format").value;
 
   const yearFromRaw = document.getElementById("yearFrom").value;
   const yearToRaw = document.getElementById("yearTo").value;
@@ -229,21 +227,27 @@ function applyAll() {
     const inFav = !onlyFavs || favs.has(String(item.release_id));
 
     const inDecade = !decade || (y != null && Math.floor(y/10)*10 === parseInt(decade,10));
-
-    return inQuery && inGenre && inStyle && inYearFrom && inYearTo && inFav && inDecade;
-  });
-
-  filtered = sortItems(filtered, sort);
-
-  render(filtered);
-  updateCount(filtered.length, collection.length);
-}
-
-function sortItems(items, sort) {
+    const inLabel = !label || (item.labels || []).includes(label);
+    const inFormat = !format ||function sortItems(items, sort) {
   const arr = [...items];
 
-  if (sort === "artist") arr.sort((a,b) => (a.artist || "").localeCompare(b.artist || ""));
+  if (sort === "fav_first") {
+    arr.sort((a,b) => {
+      const af = favs.has(String(a.release_id)) ? 1 : 0;
+      const bf = favs.has(String(b.release_id)) ? 1 : 0;
+      if (af !== bf) return bf - af;
+      return (a.artist || "").localeCompare(b.artist || "") || (a.title || "").localeCompare(b.title || "");
+    });
+  }
+  else if (sort === "artist") arr.sort((a,b) => (a.artist || "").localeCompare(b.artist || ""));
   else if (sort === "title") arr.sort((a,b) => (a.title || "").localeCompare(b.title || ""));
+  else if (sort === "year_desc") arr.sort((a,b) => (b.year || 0) - (a.year || 0));
+  else if (sort === "year_asc") arr.sort((a,b) => (a.year || 0) - (b.year || 0));
+
+  return arr;
+}
+
+else if (sort === "title") arr.sort((a,b) => (a.title || "").localeCompare(b.title || ""));
   else if (sort === "year_desc") arr.sort((a,b) => (b.year || 0) - (a.year || 0));
   else if (sort === "year_asc") arr.sort((a,b) => (a.year || 0) - (b.year || 0));
 
@@ -318,5 +322,48 @@ function populateDecades(items){
     opt.value = String(d);
     opt.textContent = `${d}s`;
     decadeEl.appendChild(opt);
+  }
+}
+
+
+function populateLabels(items){
+  const el = document.getElementById("label");
+  if (!el) return;
+
+  const set = new Set();
+  for (const it of items){
+    for (const l of (it.labels || [])){
+      if (l) set.add(String(l));
+    }
+  }
+  const labels = Array.from(set).sort((a,b)=>a.localeCompare(b));
+
+  el.innerHTML = '<option value="">Tutte le etichette</option>';
+  for (const l of labels){
+    const opt = document.createElement("option");
+    opt.value = l;
+    opt.textContent = l;
+    el.appendChild(opt);
+  }
+}
+
+function populateFormats(items){
+  const el = document.getElementById("format");
+  if (!el) return;
+
+  const set = new Set();
+  for (const it of items){
+    for (const f of (it.formats || [])){
+      if (f) set.add(String(f));
+    }
+  }
+  const formats = Array.from(set).sort((a,b)=>a.localeCompare(b));
+
+  el.innerHTML = '<option value="">Tutti i formati</option>';
+  for (const f of formats){
+    const opt = document.createElement("option");
+    opt.value = f;
+    opt.textContent = f;
+    el.appendChild(opt);
   }
 }

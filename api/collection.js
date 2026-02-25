@@ -96,6 +96,15 @@ async function fetchAllCollection() {
 
   return all.map(item => {
     const info = item.basic_information || {};
+
+    const labels = (info.labels || [])
+      .map(l => (l && l.name) ? String(l.name) : null)
+      .filter(Boolean);
+
+    const formats = (info.formats || [])
+      .map(f => (f && f.name) ? String(f.name) : null)
+      .filter(Boolean);
+
     return {
       release_id: info.id,
       title: info.title || "Senza titolo",
@@ -103,11 +112,12 @@ async function fetchAllCollection() {
       year: info.year || null,
       genres: info.genres || [],
       styles: info.styles || [],
+      labels,
+      formats,
       cover_image: info.cover_image,
       thumb: info.thumb
     };
-  });
-}
+  });}
 
 export default async function handler(req, res) {
   try {
