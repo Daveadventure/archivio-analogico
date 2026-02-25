@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/style.css?v=11" />
+  <link rel="stylesheet" href="/style.css?v=12" />
 </head>
 
 <body>
@@ -63,7 +63,6 @@
 
   <main class="wrap">
     <div id="loader" class="loader">Caricamento collezione…</div>
-<div id="debug" style="white-space:pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; opacity:.9; margin:10px 0; padding:10px; border-radius:12px; background:rgba(0,0,0,.08);"></div>
     <div id="grid" class="grid"></div>
 
     <div class="loadmore">
@@ -81,17 +80,8 @@
 
     <span>Fatto con amore e un po’ di polvere sui dischi.</span>
   </footer>
-<script>
-  window.__AA_DEBUG__ = (msg) => {
-    const el = document.getElementById('debug');
-    if (el) el.textContent += msg + "\n";
-  };
-  __AA_DEBUG__('DEBUG: index.html caricato ✅');
-  window.addEventListener('error', (e) => __AA_DEBUG__('JS ERROR: ' + (e.message || e.error)));
-  window.addEventListener('unhandledrejection', (e) => __AA_DEBUG__('PROMISE ERROR: ' + (e.reason?.message || e.reason)));
-</script>
 
 
-<script src="/app.js?v=11" onload="window.__AA_DEBUG__ && __AA_DEBUG__('DEBUG: tag app.js onload ✅')" onerror="window.__AA_DEBUG__ && __AA_DEBUG__('DEBUG: tag app.js onerror ❌')"></script>
+<script src="/app.js?v=12"></script>
 </body>
 </html>

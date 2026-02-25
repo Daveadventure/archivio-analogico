@@ -1,8 +1,4 @@
 // Archivio Analogico - app.js (pulito)
-// Debug helper (se presente)
-const DBG = (msg) => { try { window.__AA_DEBUG__ && __AA_DEBUG__(msg); } catch {} };
-
-DBG("DEBUG: app.js caricato ✅");
 
 // DOM
 const grid = document.getElementById("grid");
