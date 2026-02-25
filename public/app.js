@@ -1,3 +1,48 @@
+// FORCE BRAND (Monoton + foto vinili)
+(function forceBrand(){
+  // carica Monoton
+  if (!document.getElementById("monoton-font")) {
+    const l = document.createElement("link");
+    l.id = "monoton-font";
+    l.rel = "stylesheet";
+    l.href = "https://fonts.googleapis.com/css2?family=Monoton&display=swap";
+    document.head.appendChild(l);
+  }
+
+  // trova hero
+  let hero = document.querySelector(".hero");
+  if (!hero) return;
+
+  // crea brandline
+  let brandline = hero.querySelector(".brandline");
+  if (!brandline) {
+    brandline = document.createElement("div");
+    brandline.className = "brandline";
+    hero.prepend(brandline);
+  }
+
+  // foto
+  let img = brandline.querySelector(".brandPhoto");
+  if (!img) {
+    img = document.createElement("img");
+    img.className = "brandPhoto";
+    img.alt = "I miei dischi";
+    brandline.appendChild(img);
+  }
+  img.src = "/img/miei-dischi.jpg";
+
+  // titolo
+  let h1 = brandline.querySelector(".brandTitle");
+  if (!h1) {
+    h1 = document.createElement("h1");
+    h1.className = "brandTitle";
+    brandline.appendChild(h1);
+  }
+  h1.textContent = "Archivio Digitale";
+  h1.style.fontFamily = '"Monoton", system-ui';
+})();
+
+
 // Archivio Analogico - app.js (senza preferiti)
 
 const grid = document.getElementById("grid");
