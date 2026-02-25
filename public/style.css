@@ -469,3 +469,26 @@ margin-bottom:10px;
 
 }
 
+
+
+.filters{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+margin-bottom:20px;
+}
+
+.filters input,
+.filters select,
+.filters button{
+padding:8px 10px;
+border-radius:10px;
+border:1px solid rgba(0,0,0,.2);
+background:rgba(255,255,255,.8);
+}
+
+.filters button{
+cursor:pointer;
+}
+

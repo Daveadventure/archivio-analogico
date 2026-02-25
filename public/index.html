@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/style.css?v=300" />
+  <link rel="stylesheet" href="/style.css?v=400" />
 </head>
 
 <body>
@@ -19,8 +19,48 @@
 <div class="topVinylStrip"></div>
 
 <h1 class="brandMono">
-Archivio Analogico
-</h1>
+Archivio Analogico</h1>
+
+
+<div class="filters">
+
+<input type="text" id="search" placeholder="Cerca artista o titolo">
+
+<select id="genre">
+<option value="">Tutti i generi</option>
+</select>
+
+<select id="style">
+<option value="">Tutti gli stili</option>
+</select>
+
+<select id="format">
+<option value="">Tutti i formati</option>
+</select>
+
+<select id="label">
+<option value="">Tutte le etichette</option>
+</select>
+
+<select id="decade">
+<option value="">Tutti i decenni</option>
+</select>
+
+<input type="number" id="yearFrom" placeholder="Anno da">
+<input type="number" id="yearTo" placeholder="Anno a">
+
+<select id="sort">
+<option value="added">Ordina per aggiunta</option>
+<option value="artist">Artista A-Z</option>
+<option value="title">Titolo A-Z</option>
+<option value="year">Anno (recente prima)</option>
+</select>
+
+<button id="reset">Reset</button>
+
+</div>
+
+
 
 
 <div id="loader" class="loader">Caricamento collezione…</div>
@@ -38,6 +78,6 @@ Archivio Analogico
   <div id="buildMarker" style="opacity:.55;font-size:12px;text-align:center;margin-top:8px;">build v200</div>
 <footer class="footer">Life has surface noise (John Peel)</footer>
 
-<script src="/app.js?v=300"></script>
+<script src="/app.js?v=400"></script>
 </body>
 </html>
