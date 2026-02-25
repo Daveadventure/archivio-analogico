@@ -433,3 +433,39 @@ body.view-list .info{ padding: 6px 10px; }
   color: var(--muted);
   text-align: center;
 }
+
+
+/* Fascia vinili superiore */
+
+.topVinylStrip{
+
+height:120px;
+
+background-image:url("/img/miei-dischi.jpg");
+
+background-repeat:repeat-x;
+
+background-size:auto 60px;
+
+background-position:center;
+
+border-bottom:1px solid rgba(0,0,0,.15);
+
+}
+
+
+
+.brandMono{
+
+font-family:"Monoton";
+
+font-size:42px;
+
+text-align:center;
+
+margin-top:10px;
+
+margin-bottom:10px;
+
+}
+
