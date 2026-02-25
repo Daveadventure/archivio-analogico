@@ -59,7 +59,7 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === "/api/collection") return collection(req, res);
     if (u.pathname === "/api/filters") return filters(req, res);
     if (u.pathname === "/api/release") return release(req, res);
-
+    
     return serveStatic(req, res);
   } catch (e) {
     return send(res, 500, `Error: ${e.message}`);

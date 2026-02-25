@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     if (!USERNAME) return res.status(500).json({ error: "DISCOGS_USERNAME mancante" });
 
     const url = new URL(req.url, "http://localhost");
-    const pagesWanted = Math.min(5, Math.max(1, parseInt(url.searchParams.get("pages") || "2", 10) || 2));
+    const pagesWanted = Math.min(5, Math.max(1, parseInt(url.searchParams.get("pages") || "5", 10) || 2));
     const perPage = 100;
 
     const genres = new Set();
