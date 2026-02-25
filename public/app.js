@@ -79,6 +79,40 @@ async function fetchJson(url, tries = 2) {
   throw lastErr || new Error("Errore sconosciuto");
 }
 
+
+async function syncFavsFromServer() {
+  try {
+    const data = await fetchJson("/api/favorites", 2);
+    const serverIds = new Set((data.ids || []).map(String));
+
+    // merge: unione locale + server
+    for (const id of favs) serverIds.add(String(id));
+    favs = serverIds;
+    saveFavs(favs);
+
+    // push al server gli eventuali locali mancanti
+    for (const id of favs) {
+      // best effort: upsert
+      fetch("/api/favorites", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: String(id) }) }).catch(()=>{});
+    }
+  } catch {
+    // offline / errore: restiamo in locale
+  }
+}
+
+async function setFavOnServer(id, isFav) {
+  try {
+    if (isFav) {
+      await fetch("/api/favorites", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: String(id) }) });
+    } else {
+      await fetch("/api/favorites?id=" + encodeURIComponent(String(id)), { method: "DELETE" });
+    }
+  } catch {
+    // best effort: ignora
+  }
+}
+
+
 init();
 
 async function init() {
@@ -188,15 +222,44 @@ async function loadFilters() {
 }
 
 async function loadCollection() {
-  const data = await fetchJson("/api/collection", 2);
+  // Caricamento paginato: evita timeout su Vercel
+  const perPage = 100;
 
-  if (data && data.error) throw new Error(data.error);
+  // prima pagina
+  const first = await fetchJson(`/api/collection?page=1&per_page=${perPage}`, 2);
+  const page1 = Array.isArray(first.releases) ? first.releases : [];
+  const pag = first.pagination || {};
+  const pages = parseInt(pag.pages || 1, 10);
 
-  collection = Array.isArray(data) ? data : [];
+  collection = page1;
   filtered = [...collection];
-}
 
-function applyAll() {
+  // mostra subito qualcosa
+  applyAll();
+
+  // carica il resto in background (progressivo)
+  for (let page = 2; page <= pages; page++) {
+    try {
+      const data = await fetchJson(`/api/collection?page=${page}&per_page=${perPage}`, 2);
+      const chunk = Array.isArray(data.releases) ? data.releases : [];
+      collection = collection.concat(chunk);
+
+      // aggiorna anche i menu (decenni/label/formati) man mano
+      if (typeof populateDecades === "function") populateDecades(collection);
+      if (typeof populateLabels === "function") populateLabels(collection);
+      if (typeof populateFormats === "function") populateFormats(collection);
+
+      // ricalcola i risultati senza bloccare troppo
+      filtered = [...collection];
+      applyAll();
+
+      // piccola pausa per non stressare Discogs/browser
+      await new Promise(r => setTimeout(r, 120));
+    } catch {
+      // se una pagina fallisce, continuiamo (non blocchiamo tutto)
+    }
+  }
+}function applyAll() {
   const q = (document.getElementById("search").value || "").trim().toLowerCase();
   const genre = document.getElementById("genre").value;
   const style = document.getElementById("style").value;
