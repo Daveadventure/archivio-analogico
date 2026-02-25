@@ -98,3 +98,13 @@ function chip(label){
     err.textContent = "Errore: " + (e?.message || String(e));
   }
 })();
+
+
+// ===== SPOTIFY EMBED =====
+const embed=document.getElementById("spotifyEmbed");
+if(embed && data?.title){
+  embed.innerHTML=
+  '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/search/'+
+  encodeURIComponent(data.title)+
+  '" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>';
+}

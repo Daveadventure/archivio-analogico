@@ -346,3 +346,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
     document.body.classList.toggle("darkMode");
   });
 });
+
+
+// ===== DARK MODE PERSISTENCE =====
+document.addEventListener("DOMContentLoaded", ()=>{
+  const saved=localStorage.getItem("darkMode");
+  if(saved==="on"){
+    document.body.classList.add("darkMode");
+  }
+
+  const btn=document.getElementById("darkToggle");
+  if(btn){
+    btn.addEventListener("click", ()=>{
+      const active=document.body.classList.toggle("darkMode");
+      localStorage.setItem("darkMode", active?"on":"off");
+    });
+  }
+});
