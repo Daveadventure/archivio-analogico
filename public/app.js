@@ -142,17 +142,36 @@ function render(items){
     <div class="artist">${esc(item.artist)}</div>
     <div class="title">${esc(item.title)}</div>
     <div class="metaBadge">
-      ${item.year ? esc(item.year) : ""}
-      ${item.formats && item.formats.length ? " • " + esc(item.formats[0]) : ""}
-      ${item.country ? " • " + esc(item.country) : ""}
-      ${
-        (item.formats||[]).some(f=>f.toLowerCase().includes("mono"))
-          ? " • Mono"
-          : (item.formats||[]).some(f=>f.toLowerCase().includes("stereo"))
-            ? " • Stereo"
-            : ""
-      }
-    </div>
+  ${(() => {
+    const parts = [];
+
+    // ⭐ First Press (se anno uguale a min year disponibile — semplice e sicuro)
+    if(item.first_pressing === true){
+      parts.push('<span class="badgeStar">⭐</span>');
+    }
+
+    if(item.year) parts.push(esc(item.year));
+
+    if(item.formats && item.formats.length){
+      parts.push(esc(item.formats[0]));
+    }
+
+    if(item.country){
+      parts.push(esc(item.country));
+    }
+
+    const formatsText = (item.formats || []).join(" ").toLowerCase();
+    const descText = (item.format_descriptions || []).join(" ").toLowerCase();
+
+    if(formatsText.includes("mono") || descText.includes("mono")){
+      parts.push('<span class="badgeMono">Mono</span>');
+    } else if(formatsText.includes("stereo") || descText.includes("stereo")){
+      parts.push('<span class="badgeStereo">Stereo</span>');
+    }
+
+    return parts.join(" • ");
+  })()}
+</div>
   </div>
 `;
     link.appendChild(card);

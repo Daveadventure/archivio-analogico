@@ -763,3 +763,20 @@ body.darkMode .metaBadge{
   opacity:.75;
 }
 
+
+
+.badgeMono{
+  color:#b22222;
+  font-weight:600;
+}
+
+.badgeStereo{
+  color:#1e3a8a;
+  font-weight:600;
+}
+
+.badgeStar{
+  color:#d4af37;
+  font-weight:600;
+}
+
