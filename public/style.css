@@ -626,9 +626,20 @@ padding:8px;
 }
 
 
+
+
 .brandMono{
   font-family: "Monoton", cursive !important;
   font-weight: normal;
   font-size: 48px;
   letter-spacing: 2px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 20px auto 20px auto;
+}
+
+/* headerCenterFix */
+.topVinylStrip + .brandMono{
+  align-self: center;
 }
