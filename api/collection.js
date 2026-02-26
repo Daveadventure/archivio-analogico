@@ -24,19 +24,26 @@ function mapItem(item) {
   const labels = (info.labels || []).map(l => l?.name ? String(l.name) : null).filter(Boolean);
   const formats = (info.formats || []).map(f => f?.name ? String(f.name) : null).filter(Boolean);
 
+  return releases.map(r => {
+
+  const bi = r.basic_information || {};
+
+  const formats = (bi.formats || []);
+  const formatNames = formats.map(f => f.name);
+  const formatDescriptions = formats.flatMap(f => f.descriptions || []);
+
   return {
-    release_id: info.id,
-    title: info.title || "Senza titolo",
-    artist: info.artists?.[0]?.name || "Sconosciuto",
-    year: info.year || null,
-    genres: info.genres || [],
-    styles: info.styles || [],
-    labels,
-    formats,
-    cover_image: info.cover_image,
-    thumb: info.thumb
+    release_id: r.id,
+    artist: bi.artists?.[0]?.name || "",
+    title: bi.title || "",
+    year: bi.year || "",
+    country: bi.country || "",
+    formats: formatNames,
+    format_descriptions: formatDescriptions,
+    thumb: bi.thumb,
+    cover_image: bi.cover_image
   };
-}
+});
 
 export default async function handler(req, res) {
   try {
