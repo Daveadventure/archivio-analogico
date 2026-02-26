@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   try {
     const username = process.env.DISCOGS_USERNAME || "DAVE1971";
-    const folderId = process.env.DISCOGS_FOLDER_ID || "3617";
+    const folderId = process.env.DISCOGS_FOLDER_ID || "0";
 
     const token = process.env.DISCOGS_TOKEN;
     if (!token) {
