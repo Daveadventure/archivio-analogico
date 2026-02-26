@@ -451,21 +451,7 @@ border-bottom:1px solid rgba(0,0,0,.15);
 
 
 
-.brandMono{
 
-
-
-font-size:42px;
-
-text-align:center;
-
-margin-top:10px;
-
-margin-bottom:10px;
-
-
-  font-family: "Monoton", sans-serif !important;
-}
 
 
 
@@ -639,3 +625,10 @@ filter: brightness(1.03);
 padding:8px;
 }
 
+
+.brandMono{
+  font-family: "Monoton", cursive !important;
+  font-weight: normal;
+  font-size: 48px;
+  letter-spacing: 2px;
+}
