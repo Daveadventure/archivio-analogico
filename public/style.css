@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
 html{scroll-behavior:smooth;}
 @import url("https://fonts.googleapis.com/css2?family=Monoton&display=swap");
 :root{
@@ -434,6 +435,8 @@ body.view-list .info{ padding: 6px 10px; }
 /* Fascia vinili superiore */
 
 .topVinylStrip{
+  box-shadow: 0 6px 12px rgba(0,0,0,.15);
+
 
 height: 170px;
 
@@ -571,6 +574,8 @@ border:1px solid rgba(255,255,255,.1);
 }
 
 body.darkMode .topVinylStrip{
+  box-shadow: 0 6px 12px rgba(0,0,0,.15);
+
 filter:brightness(.7);
 }
 
@@ -643,3 +648,68 @@ padding:8px;
 .topVinylStrip + .brandMono{
   align-self: center;
 }
+
+.artist{
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.title{
+  font-style: italic;
+}
+
+
+/* ===== VINTAGE SHOP BACKGROUND ===== */
+
+body{
+  background-color:#f4f1e8;
+}
+
+body.darkMode{
+  background:#121212;
+}
+
+
+
+/* ===== VINTAGE SHELF SHADOW ===== */
+
+.card{
+  box-shadow:
+  0 6px 10px rgba(0,0,0,.08),
+  0 20px 25px rgba(0,0,0,.12);
+}
+
+.card:hover{
+  box-shadow:
+  0 12px 20px rgba(0,0,0,.12),
+  0 30px 35px rgba(0,0,0,.18);
+}
+
+
+
+.artist{
+  letter-spacing:.5px;
+}
+
+.title{
+  border-top:1px solid rgba(0,0,0,.08);
+  margin-top:4px;
+  padding-top:4px;
+}
+
+
+
+.detail{
+  background:#ffffff;
+  padding:30px;
+  border-radius:12px;
+  box-shadow:
+  0 10px 20px rgba(0,0,0,.08);
+  max-width:900px;
+  margin:40px auto;
+}
+
+body.darkMode .detail{
+  background:#1c1c1c;
+}
+
