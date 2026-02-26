@@ -1,4 +1,4 @@
-let renderingLock=false;
+
 
 
 
@@ -175,8 +175,8 @@ function sortItems(items, sort){
 }
 
 function applyAll(){
-if(renderingLock) return;
-renderingLock=true;
+
+
 
   const q = (elSearch?.value || "").trim().toLowerCase();
   const g = elGenre?.value || "";
@@ -214,7 +214,7 @@ const lpCheck = !elLpOnly?.checked ||
   const sort = elSort?.value || "added";
   filtered = sortItems(base, sort);
   render(filtered);
-setTimeout(()=>{ renderingLock=false; },50);
+
 
 }
 
@@ -319,7 +319,7 @@ function wire(){
   moreBtn?.addEventListener("click", ()=>{
     limit += 200;
     render(filtered);
-setTimeout(()=>{ renderingLock=false; },50);
+
 
   });
 
@@ -328,7 +328,7 @@ setTimeout(()=>{ renderingLock=false; },50);
     if (nearBottom && moreBtn && !moreBtn.classList.contains("hidden")){
       limit += 200;
       render(filtered);
-setTimeout(()=>{ renderingLock=false; },50);
+
 
     }
   });
