@@ -1,3 +1,4 @@
+let renderingLock=false;
 
 
 
@@ -174,6 +175,9 @@ function sortItems(items, sort){
 }
 
 function applyAll(){
+if(renderingLock) return;
+renderingLock=true;
+
   const q = (elSearch?.value || "").trim().toLowerCase();
   const g = elGenre?.value || "";
   const st = elStyle?.value || "";
@@ -210,6 +214,8 @@ const lpCheck = !elLpOnly?.checked ||
   const sort = elSort?.value || "added";
   filtered = sortItems(base, sort);
   render(filtered);
+setTimeout(()=>{ renderingLock=false; },50);
+
 }
 
 async function loadFilters(){
@@ -313,6 +319,8 @@ function wire(){
   moreBtn?.addEventListener("click", ()=>{
     limit += 200;
     render(filtered);
+setTimeout(()=>{ renderingLock=false; },50);
+
   });
 
   window.addEventListener("scroll", ()=>{
@@ -320,6 +328,8 @@ function wire(){
     if (nearBottom && moreBtn && !moreBtn.classList.contains("hidden")){
       limit += 200;
       render(filtered);
+setTimeout(()=>{ renderingLock=false; },50);
+
     }
   });
 }
