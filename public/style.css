@@ -713,3 +713,40 @@ body.darkMode .detail{
   background:#1c1c1c;
 }
 
+
+
+.totalCount{
+  text-align:center;
+  margin-bottom:18px;
+  font-size:14px;
+  letter-spacing:1px;
+  opacity:.7;
+}
+
+
+
+.quickDecades{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.quickDecades button{
+  margin:4px;
+  padding:6px 12px;
+  border:1px solid rgba(0,0,0,.2);
+  background:#fff;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.quickDecades button:hover{
+  background:#000;
+  color:#fff;
+}
+
+body.darkMode .quickDecades button{
+  background:#1f1f1f;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.2);
+}
+

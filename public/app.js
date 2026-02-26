@@ -216,6 +216,8 @@ const base = collection.filter(item=>{
   const sort = elSort?.value || "artist";
   filtered = sortItems(base, sort);
   render(filtered);
+  const tc=document.getElementById('totalCount');
+  if(tc){ tc.textContent = filtered.length + ' dischi disponibili'; }
 
 
 }
@@ -321,6 +323,8 @@ function wire(){
   moreBtn?.addEventListener("click", ()=>{
     limit += 200;
     render(filtered);
+  const tc=document.getElementById('totalCount');
+  if(tc){ tc.textContent = filtered.length + ' dischi disponibili'; }
 
 
   });
@@ -330,6 +334,8 @@ function wire(){
     if (nearBottom && moreBtn && !moreBtn.classList.contains("hidden")){
       limit += 200;
       render(filtered);
+  const tc=document.getElementById('totalCount');
+  if(tc){ tc.textContent = filtered.length + ' dischi disponibili'; }
 
 
     }
@@ -395,5 +401,29 @@ document.addEventListener("DOMContentLoaded", ()=>{
   btn.addEventListener("click", ()=>{
     const on = document.body.classList.toggle("darkMode");
     localStorage.setItem("darkMode", on ? "on" : "off");
+  });
+});
+
+
+// ===== QUICK DECADE FILTER =====
+document.addEventListener("DOMContentLoaded", ()=>{
+  document.querySelectorAll(".quickDecades button").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const decade = btn.dataset.decade;
+
+      if(!decade){
+        elDecade.value = "";
+      }else if(decade === "2000"){
+        elYearFrom.value = 2000;
+        elYearTo.value = "";
+        elDecade.value = "";
+      }else{
+        elYearFrom.value = decade;
+        elYearTo.value = parseInt(decade)+9;
+        elDecade.value = "";
+      }
+
+      applyAll();
+    });
   });
 });
