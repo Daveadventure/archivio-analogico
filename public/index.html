@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/style.css?v=1500" />
+  <link rel="stylesheet" href="/style.css?v=2000" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 Archivio Analogico</h1>
 <div style="text-align:center;margin:15px 0;">
 <label style="font-size:12px;opacity:.6;">Volume</label><br>
-<input type="range" min="0" max="100" value="60" id="volumeSlider">
+
 </div>
 
 
@@ -67,8 +67,15 @@ Archivio Analogico</h1>
 <input type="number" id="yearTo" placeholder="Anno a">
 
 <select id="sort">
-<option value="added">Ordina per aggiunta</option>
+
+
 <option value="artist">Artista A-Z</option>
+<option value="artist_desc">Artista Z-A</option>
+<option value="title">Titolo A-Z</option>
+<option value="title_desc">Titolo Z-A</option>
+<option value="year_old">Anno (più vecchio prima)</option>
+<option value="year">Anno (più recente prima)</option>
+
 <option value="title">Titolo A-Z</option>
 <option value="year">Anno (recente prima)</option>
 </select>
@@ -76,7 +83,7 @@ Archivio Analogico</h1>
 <button id="reset">Reset</button>
 <label style="display:flex;align-items:center;gap:6px;">
 <input type="checkbox" id="lpOnly">
-Solo LP
+
 </label>
 
 
@@ -100,6 +107,6 @@ Solo LP
   <div id="buildMarker" style="opacity:.55;font-size:12px;text-align:center;margin-top:8px;">build v200</div>
 <footer class="footer">Life has surface noise (John Peel)</footer>
 
-<script src="/app.js?v=1700"></script>
+<script src="/app.js?v=2000"></script>
 </body>
 </html>
