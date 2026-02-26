@@ -13,19 +13,42 @@ function headers() {
 
 export default async function handler(req, res) {
   try {
-    if (!DISCOGS_TOKEN) return res.status(500).json({ error: "DISCOGS_TOKEN mancante" });
+    const token = process.env.DISCOGS_TOKEN;
+    if (!token) {
+      return res.status(500).json({ error: "DISCOGS_TOKEN mancante" });
+    }
 
-    const id = req.query.id;
-    if (!id) return res.status(400).json({ error: "Parametro id mancante" });
+    const urlObj = new URL(req.url, `http://${req.headers.host}`);
+    const id = urlObj.searchParams.get("id");
 
-    const url = `https://api.discogs.com/releases/${id}`;
-    const resp = await fetch(url, { headers: headers() });
-    const data = await resp.json();
+    if (!id) {
+      return res.status(400).json({ error: "ID mancante" });
+    }
 
-    if (!resp.ok) return res.status(500).json({ error: data?.message || "Errore Discogs release" });
+    const r = await fetch(`https://api.discogs.com/releases/${id}`, {
+      headers: {
+        Authorization: `Discogs token=${token}`,
+        "User-Agent": "archivio-analogico/1.0",
+      },
+    });
 
-    res.status(200).json(data);
+    const data = await r.json();
+
+    if (!r.ok) {
+      return res.status(r.status).json(data);
+    }
+
+    return res.status(200).json({
+      country: data.country || "",
+      year: data.year || "",
+      labels: (data.labels || []).map(l => l.name),
+      catno: (data.labels || []).map(l => l.catno),
+      formats: (data.formats || []).flatMap(f => f.descriptions || []),
+      tracklist: data.tracklist || [],
+      notes: data.notes || ""
+    });
+
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    return res.status(500).json({ error: "Errore release", message: String(e) });
   }
 }
