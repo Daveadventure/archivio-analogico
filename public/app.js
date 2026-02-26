@@ -135,15 +135,26 @@ function render(items){
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-      <div class="cover">
-        <img loading="lazy" src="${esc(item.thumb || item.cover_image || "")}" alt="${esc(item.title)}" />
-      </div>
-      <div class="info">
-        <div class="artist">${esc(item.artist)}</div>
-        <div class="title">${esc(item.title)}</div>
-        <div class="meta2">${esc(item.year || "")}</div>
-      </div>
-    `;
+  <div class="cover">
+    <img loading="lazy" src="${esc(item.thumb || item.cover_image || "")}" alt="${esc(item.title)}" />
+  </div>
+  <div class="info">
+    <div class="artist">${esc(item.artist)}</div>
+    <div class="title">${esc(item.title)}</div>
+    <div class="metaBadge">
+      ${item.year ? esc(item.year) : ""}
+      ${item.formats && item.formats.length ? " • " + esc(item.formats[0]) : ""}
+      ${item.country ? " • " + esc(item.country) : ""}
+      ${
+        (item.formats||[]).some(f=>f.toLowerCase().includes("mono"))
+          ? " • Mono"
+          : (item.formats||[]).some(f=>f.toLowerCase().includes("stereo"))
+            ? " • Stereo"
+            : ""
+      }
+    </div>
+  </div>
+`;
     link.appendChild(card);
     grid.appendChild(link);
   }

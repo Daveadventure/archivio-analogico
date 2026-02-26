@@ -750,3 +750,16 @@ body.darkMode .quickDecades button{
   border:1px solid rgba(255,255,255,.2);
 }
 
+
+
+.metaBadge{
+  font-size:11px;
+  margin-top:6px;
+  letter-spacing:.5px;
+  opacity:.65;
+}
+
+body.darkMode .metaBadge{
+  opacity:.75;
+}
+
