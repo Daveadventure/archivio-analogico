@@ -333,7 +333,7 @@ body.view-list .badges{
   background: rgba(0,0,0,.12);
   backdrop-filter: blur(6px);
 }
-.reset:hover{ transform: translateY(-1px); }
+.reset:hover{  }
 
 
 /* === ARCHIVIO ANALOGICO THEME (retro analogico) === */
@@ -599,12 +599,7 @@ transition: transform .25s ease,
             box-shadow .25s ease;
 }
 
-.card:hover{
-transform: translateY(-8px);
-box-shadow:
-0 22px 40px rgba(0,0,0,.28),
-0 8px 18px rgba(0,0,0,.18);
-}
+
 
 
 
@@ -617,10 +612,28 @@ transition: box-shadow .25s ease,
 will-change: transform;
 }
 
+
+
+
+
+/* PURE SHADOW HOVER (NO MOVEMENT) */
+
+.card{
+transition: box-shadow .25s ease, filter .25s ease;
+}
+
 .card:hover{
-transform: translate3d(0,-6px,0);
 box-shadow:
-0 20px 35px rgba(0,0,0,.22),
-0 6px 12px rgba(0,0,0,.15);
+0 25px 45px rgba(0,0,0,.25),
+0 10px 20px rgba(0,0,0,.18);
+filter: brightness(1.03);
+}
+
+
+
+/* STABLE HIT AREA */
+
+.cardWrapper{
+padding:8px;
 }
 
