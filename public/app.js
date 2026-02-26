@@ -17,7 +17,6 @@ const elFormat = document.getElementById("format");
 const elYearFrom = document.getElementById("yearFrom");
 const elYearTo = document.getElementById("yearTo");
 const elSort = document.getElementById("sort");
-const elLpOnly = document.getElementById("lpOnly");
 const elView = document.getElementById("view");
 const elReset = document.getElementById("reset");
 
@@ -158,20 +157,26 @@ function render(items){
 }
 
 function sortItems(items, sort){
-  const arr=[...items];
-  if (sort === "artist"){
-    arr.sort((a,b)=>(a.artist||"").localeCompare(b.artist||"") || (a.title||"").localeCompare(b.title||""));
-    return arr;
+  const arr = [...items];
+
+  const byArtistAZ = (a,b)=>(a.artist||"").localeCompare(b.artist||"") || (a.title||"").localeCompare(b.title||"");
+  const byTitleAZ  = (a,b)=>(a.title||"").localeCompare(b.title||"");
+
+  if (sort === "artist") return arr.sort(byArtistAZ);
+  if (sort === "artist_desc") return arr.sort((a,b)=>-byArtistAZ(a,b));
+
+  if (sort === "title") return arr.sort(byTitleAZ);
+  if (sort === "title_desc") return arr.sort((a,b)=>-byTitleAZ(a,b));
+
+  if (sort === "year") {
+    return arr.sort((a,b)=>(parseInt(b.year||0,10)||0) - (parseInt(a.year||0,10)||0));
   }
-  if (sort === "title"){
-    arr.sort((a,b)=>(a.title||"").localeCompare(b.title||""));
-    return arr;
+  if (sort === "year_old") {
+    return arr.sort((a,b)=>(parseInt(a.year||0,10)||0) - (parseInt(b.year||0,10)||0));
   }
-  if (sort === "year"){
-    arr.sort((a,b)=> (parseInt(b.year||0,10)||0) - (parseInt(a.year||0,10)||0));
-    return arr;
-  }
-  return arr; // "added"
+
+  // fallback: artista A-Z
+  return arr.sort(byArtistAZ);
 }
 
 function applyAll(){
@@ -193,9 +198,6 @@ function applyAll(){
   
 const base = collection.filter(item=>{
 
-const lpCheck = !elLpOnly?.checked ||
-(item.formats||[]).some(f => f.toLowerCase().includes("lp"));
-
     const inQuery = !q || (String(item.artist||"").toLowerCase().includes(q) || String(item.title||"").toLowerCase().includes(q));
     const inGenre = !g || (item.genres||[]).includes(g);
     const inStyle = !st || (item.styles||[]).includes(st);
@@ -208,10 +210,10 @@ const lpCheck = !elLpOnly?.checked ||
     const inLabel = !label || (item.labels||[]).includes(label);
     const inFormat = !format || (item.formats||[]).includes(format);
 
-    return inQuery && inGenre && inStyle && inYearFrom && inYearTo && inDecade && inLabel && inFormat && lpCheck;
+    return inQuery && inGenre && inStyle && inYearFrom && inYearTo && inDecade && inLabel && inFormat;
   });
 
-  const sort = elSort?.value || "added";
+  const sort = elSort?.value || "artist";
   filtered = sortItems(base, sort);
   render(filtered);
 
@@ -378,4 +380,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
       localStorage.setItem("darkMode", active?"on":"off");
     });
   }
+});
+
+
+
+// ===== LISTENING ROOM TOGGLE (persistente) =====
+document.addEventListener("DOMContentLoaded", ()=>{
+  const saved = localStorage.getItem("darkMode");
+  if (saved === "on") document.body.classList.add("darkMode");
+
+  const btn = document.getElementById("darkToggle");
+  if (!btn) return;
+
+  btn.addEventListener("click", ()=>{
+    const on = document.body.classList.toggle("darkMode");
+    localStorage.setItem("darkMode", on ? "on" : "off");
+  });
 });

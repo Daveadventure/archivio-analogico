@@ -435,13 +435,13 @@ body.view-list .info{ padding: 6px 10px; }
 
 .topVinylStrip{
 
-height:120px;
+height: 170px;
 
 background-image:url("/img/miei-dischi.jpg");
 
 background-repeat:repeat-x;
 
-background-size:auto 60px;
+background-size: auto 95px;
 
 background-position:center;
 
@@ -453,7 +453,7 @@ border-bottom:1px solid rgba(0,0,0,.15);
 
 .brandMono{
 
-font-family:"Monoton";
+
 
 font-size:42px;
 
@@ -463,6 +463,8 @@ margin-top:10px;
 
 margin-bottom:10px;
 
+
+  font-family: "Monoton", sans-serif !important;
 }
 
 
