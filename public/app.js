@@ -159,8 +159,17 @@ function render(items){
 function sortItems(items, sort){
   const arr = [...items];
 
-  const byArtistAZ = (a,b)=>(a.artist||"").localeCompare(b.artist||"") || (a.title||"").localeCompare(b.title||"");
-  const byTitleAZ  = (a,b)=>(a.title||"").localeCompare(b.title||"");
+  const getYear = (item)=>{
+    const y = parseInt(item.year, 10);
+    return isNaN(y) ? 9999 : y; // se anno mancante va in fondo
+  };
+
+  const byArtistAZ = (a,b)=>
+    (a.artist||"").localeCompare(b.artist||"") ||
+    (a.title||"").localeCompare(b.title||"");
+
+  const byTitleAZ = (a,b)=>
+    (a.title||"").localeCompare(b.title||"");
 
   if (sort === "artist") return arr.sort(byArtistAZ);
   if (sort === "artist_desc") return arr.sort((a,b)=>-byArtistAZ(a,b));
@@ -169,13 +178,15 @@ function sortItems(items, sort){
   if (sort === "title_desc") return arr.sort((a,b)=>-byTitleAZ(a,b));
 
   if (sort === "year") {
-    return arr.sort((a,b)=>(parseInt(b.year||0,10)||0) - (parseInt(a.year||0,10)||0));
-  }
-  if (sort === "year_old") {
-    return arr.sort((a,b)=>(parseInt(a.year||0,10)||0) - (parseInt(b.year||0,10)||0));
+    // più recente prima
+    return arr.sort((a,b)=> getYear(b) - getYear(a));
   }
 
-  // fallback: artista A-Z
+  if (sort === "year_old") {
+    // più vecchio prima
+    return arr.sort((a,b)=> getYear(a) - getYear(b));
+  }
+
   return arr.sort(byArtistAZ);
 }
 
