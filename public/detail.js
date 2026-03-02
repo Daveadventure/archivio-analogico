@@ -19,7 +19,6 @@ function chip(label){
   return `<span style="display:inline-block;border:1px solid var(--line);padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.55);margin:4px 6px 0 0;font-size:12px;">${esc(label)}</span>`;
 
     // Spotify: carica embed solo al click (safe, dentro init)
-    const btn = document.getElementById("spotifyBtn");
     const embed = document.getElementById("spotifyEmbed");
     if (btn && embed) {
       btn.addEventListener("click", () => {
@@ -79,15 +78,18 @@ function chip(label){
       ? '<div class="detailDivider"></div><div class="badgeRow">' + badges.join("") + '</div>'
       : '<div class="detailDivider"></div>';
 
-    // ===== Spotify (click-to-load) =====
-    const spotifyHtml =
-      '<div style="margin-top:16px;">' +
-        '<button id="spotifyBtn" type="button" ' +
-          'style="border:1px solid var(--line); background:rgba(255,255,255,.55); padding:8px 12px; border-radius:999px; cursor:pointer;">' +
-          'Ascolta su Spotify' +
-        '</button>' +
-        '<div id="spotifyEmbed" style="margin-top:10px;"></div>' +
-      '</div>';
+    // ===== Spotify (external link) =====
+const spotifyUrl =
+  "https://open.spotify.com/search/" +
+  encodeURIComponent((artist + " " + title).trim());
+
+const spotifyHtml =
+  '<div style="margin-top:16px;">' +
+    '<a href="' + spotifyUrl + '" target="_blank" rel="noopener noreferrer" ' +
+      'style="display:inline-block; border:1px solid var(--line); background:rgba(255,255,255,.55); padding:8px 14px; border-radius:999px; text-decoration:none; color:var(--ink);">' +
+      'Ascolta su Spotify ↗' +
+    '</a>' +
+  '</div>';
 
     const discogsUri =
       data.uri ||
