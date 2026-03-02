@@ -57,7 +57,14 @@ data.basic_information?.cover_image || data.basic_information?.thumb || "";
     const formats = (data.formats || data.basic_information?.formats || []).map(f => f?.name).filter(Boolean);
     const genres = (data.genres || data.basic_information?.genres || []).filter(Boolean);
     const styles = (data.styles || data.basic_information?.styles || []).filter(Boolean);
-    const tracklist = data.tracklist || [];
+    const tracklist = data\.tracklist \|\| \[\];
+const formatDesc = []
+  .concat((data.formats || []).flatMap(f => f?.descriptions || []))
+  .concat((data.format_descriptions || []))
+  .map(x => String(x || "").toLowerCase());
+
+const isMono = formatDesc.some(x => x.includes("mono"));
+const isStereo = formatDesc.some(x => x.includes("stereo"));
 
     const discogsUri =
       data.uri ||
@@ -99,6 +106,13 @@ data.basic_information?.cover_image || data.basic_information?.thumb || "";
         <div class="card" style="padding:14px;">
           <div style="font-family:'Baumans',system-ui; font-size:28px; line-height:1.05;">${esc(title)}</div>
           <div style="margin-top:6px; font-size:16px; color: var(--muted);">${esc(artist)}</div>
+          <div class="detailDivider"></div>
+          <div class="badgeRow">
+            ${country ? `<span class="badge badgePress">${esc(country)} PRESS</span>` : ""}
+            ${catnos && catnos.length ? `<span class="badge">CAT: ${esc(catnos[0])}</span>` : ""}
+            ${isMono ? `<span class="badge badgeMono">MONO</span>` : ""}
+            ${(!isMono && isStereo) ? `<span class="badge badgeStereo">STEREO</span>` : ""}
+          </div>
           <div style="margin-top:10px;">${chips || ""}</div>
 
           ${discogsUri ? `<div style="margin-top:14px;">
@@ -109,6 +123,15 @@ data.basic_information?.cover_image || data.basic_information?.thumb || "";
           </div>` : ""}
 
           ${tracksHtml}
+
+          <div style="margin-top:16px;">
+            <button id="spotifyBtn" type="button"
+              style="border:1px solid var(--line); background:rgba(255,255,255,.55); padding:8px 12px; border-radius:999px; cursor:pointer;">
+              Ascolta su Spotify
+            </button>
+            <div id="spotifyEmbed" style="margin-top:10px;"></div>
+          </div>
+
         </div>
       </div>
     `;
