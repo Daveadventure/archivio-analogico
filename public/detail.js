@@ -29,42 +29,15 @@ function chip(label){
 
     const data = await fetchJson(`/api/release?id=${encodeURIComponent(id)}`);
 
-    const title =
-  data.title ||
-  data.basic_information?.title ||
-  "Senza titolo";
-
-const artist =
-  data.artists?.[0]?.name ||
-  data.basic_information?.artists?.[0]?.name ||
-  "Sconosciuto";
-
-const year =
-  data.year ||
-  data.released ||
-  data.basic_information?.year ||
-  "";
-
-const cover =
-  data.images?.[0]?.uri ||
-  data.cover_image ||
-  data.thumb ||
-  data.basic_information?.cover_image ||
-  data.basic_information?.thumb ||
-  "";
-data.basic_information?.cover_image || data.basic_information?.thumb || "";
+    const title = data.title || data.basic_information?.title || "Senza titolo";
+    const artist = data.artist || data.artists?.[0]?.name || data.basic_information?.artists?.[0]?.name || "Sconosciuto";
+    const year = data.year || data.released || data.basic_information?.year || "";
+    const cover = data.cover_image || data.thumb || data.images?.[0]?.uri || data.basic_information?.cover_image || data.basic_information?.thumb || "";
     const labels = (data.labels || data.basic_information?.labels || []).map(l => l?.name).filter(Boolean);
     const formats = (data.formats || data.basic_information?.formats || []).map(f => f?.name).filter(Boolean);
     const genres = (data.genres || data.basic_information?.genres || []).filter(Boolean);
     const styles = (data.styles || data.basic_information?.styles || []).filter(Boolean);
-    const tracklist = data\.tracklist \|\| \[\];
-const formatDesc = []
-  .concat((data.formats || []).flatMap(f => f?.descriptions || []))
-  .concat((data.format_descriptions || []))
-  .map(x => String(x || "").toLowerCase());
-
-const isMono = formatDesc.some(x => x.includes("mono"));
-const isStereo = formatDesc.some(x => x.includes("stereo"));
+    const tracklist = data.tracklist || [];
 
     const discogsUri =
       data.uri ||
@@ -106,13 +79,6 @@ const isStereo = formatDesc.some(x => x.includes("stereo"));
         <div class="card" style="padding:14px;">
           <div style="font-family:'Baumans',system-ui; font-size:28px; line-height:1.05;">${esc(title)}</div>
           <div style="margin-top:6px; font-size:16px; color: var(--muted);">${esc(artist)}</div>
-          <div class="detailDivider"></div>
-          <div class="badgeRow">
-            ${country ? `<span class="badge badgePress">${esc(country)} PRESS</span>` : ""}
-            ${catnos && catnos.length ? `<span class="badge">CAT: ${esc(catnos[0])}</span>` : ""}
-            ${isMono ? `<span class="badge badgeMono">MONO</span>` : ""}
-            ${(!isMono && isStereo) ? `<span class="badge badgeStereo">STEREO</span>` : ""}
-          </div>
           <div style="margin-top:10px;">${chips || ""}</div>
 
           ${discogsUri ? `<div style="margin-top:14px;">
@@ -123,15 +89,6 @@ const isStereo = formatDesc.some(x => x.includes("stereo"));
           </div>` : ""}
 
           ${tracksHtml}
-
-          <div style="margin-top:16px;">
-            <button id="spotifyBtn" type="button"
-              style="border:1px solid var(--line); background:rgba(255,255,255,.55); padding:8px 12px; border-radius:999px; cursor:pointer;">
-              Ascolta su Spotify
-            </button>
-            <div id="spotifyEmbed" style="margin-top:10px;"></div>
-          </div>
-
         </div>
       </div>
     `;
