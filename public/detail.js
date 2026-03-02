@@ -29,10 +29,30 @@ function chip(label){
 
     const data = await fetchJson(`/api/release?id=${encodeURIComponent(id)}`);
 
-    const title = data.title || data.basic_information?.title || "Senza titolo";
-    const artist = data.artist || data.artists?.[0]?.name || data.basic_information?.artists?.[0]?.name || "Sconosciuto";
-    const year = data.year || data.released || data.basic_information?.year || "";
-    const cover = data.cover_image || data.thumb || data.images?.[0]?.uri || data.basic_information?.cover_image || data.basic_information?.thumb || "";
+    const title =
+  data.title ||
+  data.basic_information?.title ||
+  "Senza titolo";
+
+const artist =
+  data.artists?.[0]?.name ||
+  data.basic_information?.artists?.[0]?.name ||
+  "Sconosciuto";
+
+const year =
+  data.year ||
+  data.released ||
+  data.basic_information?.year ||
+  "";
+
+const cover =
+  data.images?.[0]?.uri ||
+  data.cover_image ||
+  data.thumb ||
+  data.basic_information?.cover_image ||
+  data.basic_information?.thumb ||
+  "";
+data.basic_information?.cover_image || data.basic_information?.thumb || "";
     const labels = (data.labels || data.basic_information?.labels || []).map(l => l?.name).filter(Boolean);
     const formats = (data.formats || data.basic_information?.formats || []).map(f => f?.name).filter(Boolean);
     const genres = (data.genres || data.basic_information?.genres || []).filter(Boolean);
