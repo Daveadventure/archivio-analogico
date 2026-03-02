@@ -884,22 +884,36 @@ body.darkMode #detail .cover img{
 }
 
 
-/* ===== Force remove any old orange strip ===== */
-header,
-.pageHeader,
-.detailHeader,
-.topBar,
-.topVinylStrip {
+
+
+/* ===== Disable OLD strip safely (do not touch .hero) ===== */
+.topVinylStrip{ display:none !important; height:0 !important; padding:0 !important; margin:0 !important; }
+
+/* Re-assert hero background in case of other overrides */
+.hero{
+  background-image: url("/img/hero-neon.jpg") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+
+/* ===== Detail: kill any orange top line (scoped) ===== */
+body.detailPage .card,
+body.detailPage header,
+body.detailPage .topBar,
+body.detailPage .pageHeader,
+body.detailPage .detailHeader{
   border-top: none !important;
-  border-bottom: none !important;
-  background-image: none !important;
   box-shadow: none !important;
 }
 
-header::before,
-header::after,
-.pageHeader::before,
-.pageHeader::after {
-  display: none !important;
-  content: none !important;
+/* If the orange line is a pseudo element */
+body.detailPage .topBar::before,
+body.detailPage .topBar::after,
+body.detailPage .pageHeader::before,
+body.detailPage .pageHeader::after,
+body.detailPage .detailHeader::before,
+body.detailPage .detailHeader::after{
+  display:none !important;
+  content:none !important;
 }
