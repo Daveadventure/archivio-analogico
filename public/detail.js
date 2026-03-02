@@ -36,6 +36,10 @@ function chip(label){
     const labels = (data.labels || data.basic_information?.labels || []).map(l => l?.name).filter(Boolean);
     const formats = (data.formats || data.basic_information?.formats || []).map(f => f?.name).filter(Boolean);
     const genres = (data.genres || data.basic_information?.genres || []).filter(Boolean);
+    const country = data.country || data.basic_information?.country || "";
+    const catnos = (data.labels || data.basic_information?.labels || [])
+    .map(l => l?.catno)
+    .filter(Boolean);
     const styles = (data.styles || data.basic_information?.styles || []).filter(Boolean);
     const tracklist = data.tracklist || [];
 
@@ -80,6 +84,12 @@ function chip(label){
           <div style="font-family:'Baumans',system-ui; font-size:28px; line-height:1.05;">${esc(title)}</div>
           <div style="margin-top:6px; font-size:16px; color: var(--muted);">${esc(artist)}</div>
           <div style="margin-top:10px;">${chips || ""}</div>
+${country || catnos.length ? `
+  <div style="margin-top:14px; font-size:14px; line-height:1.6;">
+    ${country ? `<div><strong>Country:</strong> ${esc(country)}</div>` : ""}
+    ${catnos.length ? `<div><strong>Catalog:</strong> ${esc(catnos.join(", "))}</div>` : ""}
+  </div>
+` : ""}
 
           ${discogsUri ? `<div style="margin-top:14px;">
             <a href="${esc(discogsUri)}" target="_blank" rel="noreferrer"
