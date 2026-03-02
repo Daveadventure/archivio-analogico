@@ -882,3 +882,24 @@ body.darkMode #detail .cover img{
   52%  { opacity: .30; }
   100% { opacity: .70; transform: scale(1.02); }
 }
+
+
+/* ===== Force remove any old orange strip ===== */
+header,
+.pageHeader,
+.detailHeader,
+.topBar,
+.topVinylStrip {
+  border-top: none !important;
+  border-bottom: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+header::before,
+header::after,
+.pageHeader::before,
+.pageHeader::after {
+  display: none !important;
+  content: none !important;
+}
