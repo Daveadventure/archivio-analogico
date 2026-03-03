@@ -917,3 +917,9 @@ body.detailPage .detailHeader::after{
   display:none !important;
   content:none !important;
 }
+
+
+/* ===== Detail: hide progress bar (orange line) ===== */
+body.detailPage .progress{
+  display: none !important;
+}
