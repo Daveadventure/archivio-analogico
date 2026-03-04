@@ -191,3 +191,26 @@ behavior:"smooth"
 
 })
 
+
+
+// ===== AUTO SCROLL DETAIL HERO =====
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+
+const hero=document.querySelector(".hero")
+
+if(hero){
+
+window.scrollTo({
+top: hero.offsetHeight - 40,
+behavior:"smooth"
+})
+
+}
+
+},300)
+
+})
+
