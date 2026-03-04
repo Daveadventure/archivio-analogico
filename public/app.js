@@ -468,3 +468,23 @@ document.addEventListener("DOMContentLoaded", ()=>{
     });
   });
 });
+
+
+// ===== HERO TONEARM SCROLL =====
+
+const tonearm = document.querySelector(".tonearmScroll");
+
+if(tonearm){
+
+window.addEventListener("scroll", () => {
+
+if(window.scrollY > 120){
+tonearm.classList.add("tonearmHidden");
+}else{
+tonearm.classList.remove("tonearmHidden");
+}
+
+});
+
+}
+

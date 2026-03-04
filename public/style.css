@@ -938,3 +938,33 @@ body.darkMode .card .meta2{
   color: rgba(255,255,255,.75) !important;
 }
 
+
+
+/* ===== TONEARM SCROLL ===== */
+
+.tonearmScroll{
+position:absolute;
+left:50%;
+bottom:25px;
+transform:translateX(-50%);
+opacity:.9;
+transition:opacity .4s ease, transform .4s ease;
+z-index:10;
+}
+
+.tonearmScroll svg{
+filter: drop-shadow(0 0 6px rgba(255,255,255,.4));
+animation:tonearmSwing 3s ease-in-out infinite;
+}
+
+@keyframes tonearmSwing{
+0%{transform:rotate(-2deg)}
+50%{transform:rotate(2deg)}
+100%{transform:rotate(-2deg)}
+}
+
+.tonearmHidden{
+opacity:0;
+pointer-events:none;
+}
+
