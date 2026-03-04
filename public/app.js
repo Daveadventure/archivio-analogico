@@ -527,3 +527,26 @@ v.play().catch(()=>{})
 
 })
 
+
+
+// ===== VINYL SOUND USER INTERACTION =====
+
+let vinylPlayed=false;
+
+function playVinyl(){
+
+if(vinylPlayed) return;
+
+const v=document.getElementById("vinylNoise");
+
+if(v){
+v.volume=0.35;
+v.play().catch(()=>{});
+vinylPlayed=true;
+}
+
+}
+
+window.addEventListener("click",playVinyl,{once:true});
+window.addEventListener("scroll",playVinyl,{once:true});
+
