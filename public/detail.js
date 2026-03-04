@@ -163,6 +163,26 @@ const spotifyHtml =
     err.classList.remove("hidden");
     err.textContent = "Errore: " + (e?.message || String(e));
   }
+
+
+// ===== AUTO SCROLL DETAIL FINAL =====
+
+setTimeout(()=>{
+
+const detail=document.getElementById("detail")
+
+if(detail){
+
+detail.scrollIntoView({
+behavior:"smooth",
+block:"start"
+})
+
+}
+
+},600)
+
+
 })();
 
 

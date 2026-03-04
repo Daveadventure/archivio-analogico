@@ -970,17 +970,7 @@ pointer-events:none;
 
 
 
-/* ===== OPEN SIGN HERO ===== */
 
-.openSignScroll{
-position:absolute;
-left:50%;
-bottom:30px;
-transform:translateX(-50%);
-opacity:.9;
-transition:opacity .5s ease, transform .4s ease;
-z-index:10;
-}
 
 .openSignScroll img{
 width:120px;
@@ -1005,15 +995,7 @@ pointer-events:none;
 
 
 
-/* ===== OPEN SIGN POSITION FIX ===== */
 
-.openSignScroll{
-position:absolute;
-left:42%;
-bottom:60px;
-transform:translateX(-50%);
-z-index:20;
-}
 
 .openSignScroll img{
 width:200px;
@@ -1064,10 +1046,7 @@ drop-shadow(0 0 30px #ff8)
 
 
 
-/* ===== OPEN SIGN NUDGE RIGHT ===== */
-.openSignScroll{
-left: calc(42% + 40px) !important;
-}
+
 
 
 
@@ -1084,11 +1063,20 @@ body.darkMode .chip{
   color: rgba(255,255,255,.92) !important;
 }
 
-/* ===== OPEN SIGN CENTER FINAL ===== */
+
+
+/* ===== OPEN SIGN CENTERED ===== */
+
 .openSignScroll{
 position:absolute;
-left:50% !important;
-bottom:60px;
-transform:translateX(-10%);
+left:50%;
+bottom:70px;
+transform:translateX(-50%);
 z-index:20;
 }
+
+.openSignScroll img{
+width:220px;
+max-width:28vw;
+}
+
