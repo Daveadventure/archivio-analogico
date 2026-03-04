@@ -1,14 +1,3 @@
-
-
-// ===== PERSIST LISTENING ROOM =====
-
-const savedMode=localStorage.getItem("darkMode")
-
-if(savedMode==="on"){
-document.body.classList.add("darkMode")
-}
-
-
 function esc(s){
   return String(s ?? "")
     .replaceAll("&","&amp;").replaceAll("<","&lt;")
@@ -28,21 +17,6 @@ async function fetchJson(url){
 
 function chip(label){
   return `<span style="display:inline-block;border:1px solid var(--line);padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.55);margin:4px 6px 0 0;font-size:12px;">${esc(label)}</span>`;
-
-    // Spotify: carica embed solo al click (safe, dentro init)
-    const embed = document.getElementById("spotifyEmbed");
-    if (btn && embed) {
-      btn.addEventListener("click", () => {
-        const q = encodeURIComponent((artist + " " + title).trim());
-        embed.innerHTML =
-          '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/search/' +
-          q +
-          '" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>';
-        btn.disabled = true;
-        btn.textContent = "Spotify pronto ✅";
-      });
-    }
-
 }
 
 (async function init(){
@@ -55,52 +29,35 @@ function chip(label){
 
     const data = await fetchJson(`/api/release?id=${encodeURIComponent(id)}`);
 
-    const title = data.title || data.basic_information?.title || "Senza titolo";
-    const artist = data.artist || data.artists?.[0]?.name || data.basic_information?.artists?.[0]?.name || "Sconosciuto";
-    const year = data.year || data.released || data.basic_information?.year || "";
-    const cover = (data.images||[]).find(i => i && i.type === "primary")?.uri || data.images?.[0]?.uri || data.cover_image || data.thumb || data.basic_information?.cover_image || data.basic_information?.thumb || "";
+    const title =
+  data.title ||
+  data.basic_information?.title ||
+  "Senza titolo";
+
+const artist =
+  data.artists?.[0]?.name ||
+  data.basic_information?.artists?.[0]?.name ||
+  "Sconosciuto";
+
+const year =
+  data.year ||
+  data.released ||
+  data.basic_information?.year ||
+  "";
+
+const cover =
+  data.images?.[0]?.uri ||
+  data.cover_image ||
+  data.thumb ||
+  data.basic_information?.cover_image ||
+  data.basic_information?.thumb ||
+  "";
+data.basic_information?.cover_image || data.basic_information?.thumb || "";
     const labels = (data.labels || data.basic_information?.labels || []).map(l => l?.name).filter(Boolean);
     const formats = (data.formats || data.basic_information?.formats || []).map(f => f?.name).filter(Boolean);
     const genres = (data.genres || data.basic_information?.genres || []).filter(Boolean);
     const styles = (data.styles || data.basic_information?.styles || []).filter(Boolean);
     const tracklist = data.tracklist || [];
-
-    // ===== Vintage meta badges (safe string, no nested templates) =====
-    const country = data.country || data.basic_information?.country || "";
-    const catnos = (data.labels || data.basic_information?.labels || [])
-      .map(l => l?.catno)
-      .filter(Boolean);
-
-    const desc = []
-      .concat((data.formats || []).flatMap(f => f?.descriptions || []))
-      .concat((data.format_descriptions || []))
-      .map(x => String(x || "").toLowerCase());
-
-    const isMono = desc.some(x => x.includes("mono"));
-    const isStereo = desc.some(x => x.includes("stereo"));
-
-    const badges = [];
-    if (country) badges.push('<span class="badge badgePress">' + esc(country) + ' PRESS</span>');
-    if (catnos.length) badges.push('<span class="badge">CAT: ' + esc(catnos[0]) + '</span>');
-    if (isMono) badges.push('<span class="badge badgeMono">MONO</span>');
-    else if (isStereo) badges.push('<span class="badge badgeStereo">STEREO</span>');
-
-    const badgesHtml = badges.length
-      ? '<div class="detailDivider"></div><div class="badgeRow">' + badges.join("") + '</div>'
-      : '<div class="detailDivider"></div>';
-
-    // ===== Spotify (external link) =====
-const spotifyUrl =
-  "https://open.spotify.com/search/" +
-  encodeURIComponent((artist + " " + title).trim());
-
-const spotifyHtml =
-  '<div style="margin-top:16px;">' +
-    '<a href="' + spotifyUrl + '" target="_blank" rel="noopener noreferrer" ' +
-      'style="display:inline-block; border:1px solid var(--line); background:rgba(255,255,255,.55); padding:8px 14px; border-radius:999px; text-decoration:none; color:var(--ink);">' +
-      'Ascolta su Spotify ↗' +
-    '</a>' +
-  '</div>';
 
     const discogsUri =
       data.uri ||
@@ -142,7 +99,6 @@ const spotifyHtml =
         <div class="card" style="padding:14px;">
           <div style="font-family:'Baumans',system-ui; font-size:28px; line-height:1.05;">${esc(title)}</div>
           <div style="margin-top:6px; font-size:16px; color: var(--muted);">${esc(artist)}</div>
-          ${badgesHtml}
           <div style="margin-top:10px;">${chips || ""}</div>
 
           ${discogsUri ? `<div style="margin-top:14px;">
@@ -153,8 +109,6 @@ const spotifyHtml =
           </div>` : ""}
 
           ${tracksHtml}
-
-          ${spotifyHtml}
         </div>
       </div>
     `;

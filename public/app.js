@@ -488,3 +488,42 @@ tonearm.classList.remove("tonearmHidden");
 
 }
 
+
+
+// ===== OPEN SIGN SCROLL =====
+
+const openSign=document.querySelector(".openSignScroll");
+
+if(openSign){
+
+window.addEventListener("scroll",()=>{
+
+if(window.scrollY>120){
+openSign.classList.add("openSignHidden")
+}else{
+openSign.classList.remove("openSignHidden")
+}
+
+})
+
+}
+
+
+
+// ===== VINYL SOUND =====
+
+window.addEventListener("load",()=>{
+
+const v=document.getElementById("vinylNoise")
+
+if(v){
+setTimeout(()=>{
+
+v.volume=0.35
+v.play().catch(()=>{})
+
+},400)
+}
+
+})
+
