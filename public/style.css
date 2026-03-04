@@ -1063,10 +1063,12 @@ drop-shadow(0 0 30px #ff8)
 
 
 
+
 /* ===== OPEN SIGN NUDGE RIGHT ===== */
 .openSignScroll{
-  left: calc(42% + 12px) !important;
+left: calc(42% + 40px) !important;
 }
+
 
 
 
