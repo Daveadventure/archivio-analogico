@@ -1061,3 +1061,23 @@ drop-shadow(0 0 30px #ff8)
 
 }
 
+
+
+/* ===== OPEN SIGN NUDGE RIGHT ===== */
+.openSignScroll{
+  left: calc(42% + 12px) !important;
+}
+
+
+
+/* ===== LISTENING ROOM: detail readability ===== */
+body.darkMode{
+  --muted: rgba(255,255,255,.78) !important;
+  --ink: rgba(255,255,255,.92) !important;
+}
+
+body.darkMode .chip{
+  background: rgba(255,255,255,.08) !important;
+  border-color: rgba(255,255,255,.20) !important;
+  color: rgba(255,255,255,.92) !important;
+}
