@@ -550,3 +550,34 @@ vinylPlayed=true;
 window.addEventListener("click",playVinyl,{once:true});
 window.addEventListener("scroll",playVinyl,{once:true});
 
+
+
+
+// ===== VINYL SOUND GESTURE SAFE =====
+(function(){
+  let played = false;
+
+  function playVinyl(){
+    if(played) return;
+    const v = document.getElementById("vinylNoise");
+    if(!v) return;
+
+    v.volume = 0.35;
+    const p = v.play();
+    if (p && typeof p.catch === "function") p.catch(()=>{});
+    played = true;
+
+    // pulizia listeners
+    window.removeEventListener("pointerdown", playVinyl, true);
+    window.removeEventListener("touchstart", playVinyl, true);
+    window.removeEventListener("keydown", playVinyl, true);
+    window.removeEventListener("wheel", playVinyl, true);
+  }
+
+  // cattura in fase capture: prende anche se clicchi su elementi sopra (hero, svg, etc)
+  window.addEventListener("pointerdown", playVinyl, true);
+  window.addEventListener("touchstart", playVinyl, true);
+  window.addEventListener("keydown", playVinyl, true);
+  window.addEventListener("wheel", playVinyl, true);
+})();
+
