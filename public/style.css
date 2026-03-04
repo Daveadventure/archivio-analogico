@@ -923,3 +923,18 @@ body.detailPage .detailHeader::after{
 body.detailPage .progress{
   display: none !important;
 }
+
+
+/* ===== LISTENING ROOM TITLE FIX ===== */
+body.darkMode .card .artist{
+  color: rgba(255,255,255,.92) !important;
+}
+
+body.darkMode .card .title{
+  color: rgba(255,255,255,.95) !important;
+}
+
+body.darkMode .card .meta2{
+  color: rgba(255,255,255,.75) !important;
+}
+
