@@ -1065,18 +1065,58 @@ body.darkMode .chip{
 
 
 
-/* ===== OPEN SIGN CENTERED ===== */
+
+/* ===== OPEN SIGN FINAL POSITION ===== */
 
 .openSignScroll{
 position:absolute;
 left:50%;
-bottom:70px;
-transform:translateX(-50%);
+top:55%;
+transform:translate(-50%,-50%);
 z-index:20;
 }
 
 .openSignScroll img{
 width:220px;
 max-width:28vw;
+}
+
+
+
+.openSignScroll img{
+width:220px;
+max-width:28vw;
+}
+
+
+
+/* ===== NEON HERO FLICKER ===== */
+
+.heroNeon h1{
+opacity:0;
+animation:neonFlicker 2.6s forwards;
+}
+
+@keyframes neonFlicker{
+
+0%{opacity:0;filter:blur(6px)}
+
+10%{opacity:.3}
+18%{opacity:.1}
+25%{opacity:.5}
+32%{opacity:.2}
+45%{opacity:.8}
+55%{opacity:.4}
+70%{opacity:.9}
+85%{opacity:.6}
+
+100%{
+opacity:1;
+filter:
+drop-shadow(0 0 6px #ffb)
+drop-shadow(0 0 18px #ffb)
+drop-shadow(0 0 36px #ffb)
+}
+
 }
 
