@@ -1003,3 +1003,61 @@ opacity:0;
 pointer-events:none;
 }
 
+
+
+/* ===== OPEN SIGN POSITION FIX ===== */
+
+.openSignScroll{
+position:absolute;
+left:42%;
+bottom:60px;
+transform:translateX(-50%);
+z-index:20;
+}
+
+.openSignScroll img{
+width:200px;
+max-width:25vw;
+}
+
+
+
+/* ===== BADGES DARK MODE FIX ===== */
+
+body.darkMode .chip{
+background:rgba(255,255,255,.08);
+border-color:rgba(255,255,255,.2);
+color:rgba(255,255,255,.9);
+}
+
+body.darkMode .chip strong{
+color:white;
+}
+
+
+
+/* ===== NEON SIGN FLICKER ===== */
+
+.heroNeon h1{
+opacity:0;
+animation:neonStart 2.2s forwards;
+}
+
+@keyframes neonStart{
+
+0%{opacity:0; filter:blur(6px)}
+20%{opacity:.4}
+35%{opacity:.2}
+50%{opacity:.7}
+65%{opacity:.4}
+80%{opacity:.9}
+100%{
+opacity:1;
+filter:
+drop-shadow(0 0 6px #ff8)
+drop-shadow(0 0 18px #ff8)
+drop-shadow(0 0 30px #ff8)
+}
+
+}
+
