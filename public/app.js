@@ -510,127 +510,40 @@ openSign.classList.remove("openSignHidden")
 
 
 
-// ===== VINYL SOUND =====
-
-window.addEventListener("load",()=>{
-
-const v=document.getElementById("vinylNoise")
-
-if(v){
-setTimeout(()=>{
-
-v.volume=0.35
-v.play().catch(()=>{})
-
-},400)
-}
-
-})
-
-
-
-// ===== VINYL SOUND USER INTERACTION =====
-
-let vinylPlayed=false;
-
-function playVinyl(){
-
-if(vinylPlayed) return;
-
-const v=document.getElementById("vinylNoise");
-
-if(v){
-v.volume=0.35;
-v.play().catch(()=>{});
-vinylPlayed=true;
-}
-
-}
-
-window.addEventListener("click",playVinyl,{once:true});
-window.addEventListener("scroll",playVinyl,{once:true});
 
 
 
 
-// ===== VINYL SOUND GESTURE SAFE =====
-(function(){
-  let played = false;
-
-  function playVinyl(){
-    if(played) return;
-    const v = document.getElementById("vinylNoise");
-    if(!v) return;
-
-    v.volume = 0.35;
-    const p = v.play();
-    if (p && typeof p.catch === "function") p.catch(()=>{});
-    played = true;
-
-    // pulizia listeners
-    window.removeEventListener("pointerdown", playVinyl, true);
-    window.removeEventListener("touchstart", playVinyl, true);
-    window.removeEventListener("keydown", playVinyl, true);
-    window.removeEventListener("wheel", playVinyl, true);
-  }
-
-  // cattura in fase capture: prende anche se clicchi su elementi sopra (hero, svg, etc)
-  window.addEventListener("pointerdown", playVinyl, true);
-  window.addEventListener("touchstart", playVinyl, true);
-  window.addEventListener("keydown", playVinyl, true);
-  window.addEventListener("wheel", playVinyl, true);
-})();
 
 
 
-// ===== VINYL SOUND FIRST INTERACTION =====
-(function(){
-
-let played=false;
-
-function playVinyl(){
-
-if(played) return;
-
-const v=document.getElementById("vinylNoise");
-
-if(v){
-v.volume=0.35;
-v.play().catch(()=>{});
-played=true;
-}
-
-}
-
-["pointerdown","touchstart","mousemove","keydown"].forEach(evt=>{
-window.addEventListener(evt,playVinyl,{once:true});
-});
-
-})();
 
 
-// ===== SHOP AMBIENCE =====
+
+
+// ===== AUDIO TRIGGER ON OPEN SIGN =====
 
 (function(){
 
-let started=false;
+const openSign=document.querySelector(".openSignScroll");
 
-function startAmbience(){
+if(!openSign) return;
 
-if(started) return;
+openSign.addEventListener("click",()=>{
 
-const a=document.getElementById("shopAmbience");
+const vinyl=document.getElementById("vinylNoise");
+const shop=document.getElementById("shopAmbience");
 
-if(a){
-a.volume=0.05;
-a.play().catch(()=>{});
-started=true;
+if(vinyl){
+vinyl.volume=0.22;
+vinyl.play().catch(()=>{});
 }
 
+if(shop){
+shop.volume=0.05;
+shop.play().catch(()=>{});
 }
 
-["pointerdown","mousemove","touchstart"].forEach(e=>{
-window.addEventListener(e,startAmbience,{once:true});
 });
 
 })();
