@@ -1239,3 +1239,27 @@ mix-blend-mode:multiply;
 
 }
 
+
+
+/* ===== ANALOG GRAIN ===== */
+body:not(.darkMode)::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+
+  /* piccolo pattern di grana */
+  background-image:
+    radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px),
+    radial-gradient(rgba(0,0,0,.05) 1px, transparent 1px);
+
+  background-size: 3px 3px, 4px 4px;
+  background-position: 0 0, 1px 1px;
+
+  opacity:.18;
+  mix-blend-mode:multiply;
+}
+
+/* niente grana in Listening Room */
+body.darkMode::after{ content:none; }
