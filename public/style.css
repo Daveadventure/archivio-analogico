@@ -1178,3 +1178,19 @@ drop-shadow(0 0 18px #ff8);
 
 }
 
+
+
+/* ===== VINYL INNER SLEEVE TEXTURE ===== */
+
+body:not(.darkMode){
+
+background:
+linear-gradient(rgba(244,239,230,.92), rgba(244,239,230,.92)),
+url("/img/inner-sleeve.jpg");
+
+background-size:900px;
+background-repeat:repeat;
+background-attachment:fixed;
+
+}
+
