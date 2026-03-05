@@ -410,7 +410,7 @@ body::before{
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(255,255,255,.6);
-  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  box-shadow:0 6px 14px rgba(0,0,0,.10),0 20px 40px rgba(0,0,0,.16);
 }
 .cover img{ border-radius: 14px; }
 
@@ -1217,3 +1217,25 @@ body.darkMode::before{
   z-index:-1;
   background:#0b0b0b;
 }
+
+
+/* ===== VINTAGE LIGHT VIGNETTE ===== */
+
+body:not(.darkMode)::after{
+
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+
+background:
+radial-gradient(
+ellipse at center,
+rgba(255,255,255,0) 45%,
+rgba(0,0,0,.08) 100%
+);
+
+mix-blend-mode:multiply;
+
+}
+
