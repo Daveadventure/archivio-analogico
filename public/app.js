@@ -581,3 +581,57 @@ window.addEventListener("scroll",playVinyl,{once:true});
   window.addEventListener("wheel", playVinyl, true);
 })();
 
+
+
+// ===== VINYL SOUND FIRST INTERACTION =====
+(function(){
+
+let played=false;
+
+function playVinyl(){
+
+if(played) return;
+
+const v=document.getElementById("vinylNoise");
+
+if(v){
+v.volume=0.35;
+v.play().catch(()=>{});
+played=true;
+}
+
+}
+
+["pointerdown","touchstart","mousemove","keydown"].forEach(evt=>{
+window.addEventListener(evt,playVinyl,{once:true});
+});
+
+})();
+
+
+// ===== SHOP AMBIENCE =====
+
+(function(){
+
+let started=false;
+
+function startAmbience(){
+
+if(started) return;
+
+const a=document.getElementById("shopAmbience");
+
+if(a){
+a.volume=0.05;
+a.play().catch(()=>{});
+started=true;
+}
+
+}
+
+["pointerdown","mousemove","touchstart"].forEach(e=>{
+window.addEventListener(e,startAmbience,{once:true});
+});
+
+})();
+
