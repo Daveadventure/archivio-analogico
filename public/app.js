@@ -558,3 +558,36 @@ shop.play().catch(()=>{});
 
 
 
+
+
+// ===== RANDOM INNER SLEEVE BACKGROUND =====
+
+(function(){
+
+const sleeves=[
+
+"/img/sleeve-blue-note.jpg",
+"/img/sleeve-capitol.jpg",
+"/img/sleeve-cbs.jpg",
+"/img/sleeve-decca.jpg",
+"/img/sleeve-harvest.jpg",
+"/img/sleeve-liberty.jpg",
+"/img/sleeve-motown.jpg",
+"/img/sleeve-prestige.jpg",
+"/img/sleeve-pye.jpg",
+"/img/sleeve-rca.jpg",
+"/img/sleeve-vertigo.jpg",
+"/img/sleeve-casablanca.jpg",
+"/img/sleeve-irma.jpg"
+
+];
+
+const pick=sleeves[Math.floor(Math.random()*sleeves.length)];
+
+document.documentElement.style.setProperty(
+"--sleeve-bg",
+'url("'+pick+'")'
+);
+
+})();
+
