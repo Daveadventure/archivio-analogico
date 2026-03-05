@@ -1194,3 +1194,26 @@ background-attachment:fixed;
 
 }
 
+
+
+/* ===== VINYL SLEEVE LAYER (unbreakable) ===== */
+body:not(.darkMode)::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:
+    linear-gradient(rgba(244,239,230,.86), rgba(244,239,230,.90)),
+    url("/img/inner-sleeve.jpg");
+  background-size:900px;
+  background-repeat:repeat;
+  background-attachment:fixed;
+  opacity:1;
+}
+body.darkMode::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:#0b0b0b;
+}
