@@ -1140,3 +1140,41 @@ box-shadow:
 
 }
 
+
+
+/* ===== OPEN SIGN FLASH ===== */
+
+.openFlash img{
+
+animation:openFlash .35s ease;
+
+}
+
+@keyframes openFlash{
+
+0%{
+
+filter:
+drop-shadow(0 0 8px #ff8)
+drop-shadow(0 0 18px #ff8);
+
+}
+
+50%{
+
+filter:
+drop-shadow(0 0 20px #ff8)
+drop-shadow(0 0 40px #ff8);
+
+}
+
+100%{
+
+filter:
+drop-shadow(0 0 8px #ff8)
+drop-shadow(0 0 18px #ff8);
+
+}
+
+}
+

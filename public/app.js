@@ -521,7 +521,9 @@ openSign.classList.remove("openSignHidden")
 
 
 
-// ===== AUDIO TRIGGER ON OPEN SIGN =====
+
+
+// ===== OPEN SIGN FLASH + AUDIO =====
 
 (function(){
 
@@ -529,7 +531,13 @@ const openSign=document.querySelector(".openSignScroll");
 
 if(!openSign) return;
 
-openSign.addEventListener("click",()=>{
+openSign.addEventListener("click",(e)=>{
+
+openSign.classList.add("openFlash");
+
+setTimeout(()=>{
+openSign.classList.remove("openFlash");
+},350);
 
 const vinyl=document.getElementById("vinylNoise");
 const shop=document.getElementById("shopAmbience");
@@ -547,4 +555,6 @@ shop.play().catch(()=>{});
 });
 
 })();
+
+
 
