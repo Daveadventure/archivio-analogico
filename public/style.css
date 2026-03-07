@@ -1180,12 +1180,34 @@ drop-shadow(0 0 18px #ff8);
 
 
 
-/* ===== VINYL INNER SLEEVE TEXTURE ===== */
+
+
+/* niente grana in Listening Room */
+body.darkMode::after{ content:none; }
+
+
+
+/* ===== RANDOM INNER SLEEVE BODY BACKGROUND ===== */
+body:not(.darkMode){
+  background-image:
+    linear-gradient(rgba(244,239,230,.55), rgba(244,239,230,.60)),
+    var(--sleeve-bg, url("/img/inner-sleeve.jpg")) !important;
+  background-size: 520px !important;
+  background-repeat: repeat !important;
+  background-attachment: fixed !important;
+}
+
+body.darkMode{
+  background: #0b0b0b !important;
+}
+
+
+/* ===== RANDOM INNER SLEEVE BACKGROUND ===== */
 
 body:not(.darkMode){
 
-background:
-linear-gradient(rgba(244,239,230,.92), rgba(244,239,230,.92)),
+background-image:
+linear-gradient(rgba(244,239,230,.55), rgba(244,239,230,.60)),
 var(--sleeve-bg, url("/img/inner-sleeve.jpg"));
 
 background-size:520px;
@@ -1194,72 +1216,7 @@ background-attachment:fixed;
 
 }
 
-
-
-/* ===== VINYL SLEEVE LAYER (unbreakable) ===== */
-body:not(.darkMode)::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  background:
-    linear-gradient(rgba(244,239,230,.55), rgba(244,239,230,.60)),
-    var(--sleeve-bg, url("/img/inner-sleeve.jpg"));
-  background-size:520px;
-  background-repeat:repeat;
-  background-attachment:fixed;
-  opacity:1;
-}
-body.darkMode::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  background:#0b0b0b;
+body.darkMode{
+background:#0b0b0b !important;
 }
 
-
-/* ===== VINTAGE LIGHT VIGNETTE ===== */
-
-body:not(.darkMode)::after{
-
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
-
-background:
-radial-gradient(
-ellipse at center,
-rgba(255,255,255,0) 45%,
-rgba(0,0,0,.08) 100%
-);
-
-mix-blend-mode:multiply;
-
-}
-
-
-
-/* ===== ANALOG GRAIN ===== */
-body:not(.darkMode)::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-
-  /* piccolo pattern di grana */
-  background-image:
-    radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px),
-    radial-gradient(rgba(0,0,0,.05) 1px, transparent 1px);
-
-  background-size: 3px 3px, 4px 4px;
-  background-position: 0 0, 1px 1px;
-
-  opacity:.18;
-  mix-blend-mode:multiply;
-}
-
-/* niente grana in Listening Room */
-body.darkMode::after{ content:none; }
