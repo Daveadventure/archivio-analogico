@@ -1186,7 +1186,7 @@ body:not(.darkMode){
 
 background:
 linear-gradient(rgba(244,239,230,.92), rgba(244,239,230,.92)),
-url("/img/inner-sleeve.jpg");
+var(--sleeve-bg, url("/img/inner-sleeve.jpg"));
 
 background-size:520px;
 background-repeat:repeat;
@@ -1204,7 +1204,7 @@ body:not(.darkMode)::before{
   z-index:-1;
   background:
     linear-gradient(rgba(244,239,230,.55), rgba(244,239,230,.60)),
-    url("/img/inner-sleeve.jpg");
+    var(--sleeve-bg, url("/img/inner-sleeve.jpg"));
   background-size:520px;
   background-repeat:repeat;
   background-attachment:fixed;

@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<script>
+(function(){
+  var sleeves = [
+    "/img/sleeve-blue-note.jpg",
+    "/img/sleeve-capitol.jpg",
+    "/img/sleeve-cbs.jpg",
+    "/img/sleeve-decca.jpg",
+    "/img/sleeve-harvest.jpg",
+    "/img/sleeve-liberty.jpg",
+    "/img/sleeve-motown.jpg",
+    "/img/sleeve-prestige.jpg",
+    "/img/sleeve-pye.jpg",
+    "/img/sleeve-rca.jpg",
+    "/img/sleeve-vertigo.jpg",
+    "/img/sleeve-casablanca.jpg",
+    "/img/sleeve-irma.jpg"
+  ];
+  var pick = sleeves[Math.floor(Math.random() * sleeves.length)];
+  document.documentElement.style.setProperty("--sleeve-bg", 'url("' + pick + '")');
+})();
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Archivio Analogico</title>
@@ -17,7 +38,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/style.css?v=13000" />
+  <link rel="stylesheet" href="/style.css?v=13010" />
 <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 </head>
 
@@ -101,7 +122,7 @@
   <div id="buildMarker" style="opacity:.55;font-size:12px;text-align:center;margin-top:8px;">build v200</div>
 <footer class="footer">Life has surface noise (John Peel)</footer>
 
-<script src="/app.js?v=13000"></script>
+<script src="/app.js?v=13010"></script>
 
 <audio id="vinylNoise" src="/audio/vinyl.mp3" preload="auto"></audio>
 

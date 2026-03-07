@@ -1,10 +1,31 @@
 <!doctype html>
 <html lang="it">
 <head>
+<script>
+(function(){
+  var sleeves = [
+    "/img/sleeve-blue-note.jpg",
+    "/img/sleeve-capitol.jpg",
+    "/img/sleeve-cbs.jpg",
+    "/img/sleeve-decca.jpg",
+    "/img/sleeve-harvest.jpg",
+    "/img/sleeve-liberty.jpg",
+    "/img/sleeve-motown.jpg",
+    "/img/sleeve-prestige.jpg",
+    "/img/sleeve-pye.jpg",
+    "/img/sleeve-rca.jpg",
+    "/img/sleeve-vertigo.jpg",
+    "/img/sleeve-casablanca.jpg",
+    "/img/sleeve-irma.jpg"
+  ];
+  var pick = sleeves[Math.floor(Math.random() * sleeves.length)];
+  document.documentElement.style.setProperty("--sleeve-bg", 'url("' + pick + '")');
+})();
+</script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dettaglio — Archivio Analogico</title>
-  <link rel="stylesheet" href="/style.css?v=10000" />
+  <link rel="stylesheet" href="/style.css?v=13010" />
 <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 </head>
 <body class="detailPage">
@@ -27,6 +48,6 @@
     <footer class="footer">Life has surface noise (John Peel)</footer>
   </main>
 
-  <script src="/detail.js?v=9600"></script>
+  <script src="/detail.js?v=13010"></script>
 </body>
 </html>
