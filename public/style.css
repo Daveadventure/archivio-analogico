@@ -1242,3 +1242,35 @@ opacity:1;
 
 }
 
+
+
+/* ===== RECORD SHOP LIGHT SWEEP ===== */
+body:not(.darkMode)::after{
+  content:"";
+  position:fixed;
+  inset:-20% -10% auto -10%;
+  height:60%;
+  pointer-events:none;
+  z-index:0;
+
+  background:
+    radial-gradient(ellipse at 50% 0%,
+      rgba(255,255,255,.35) 0%,
+      rgba(255,255,255,.18) 25%,
+      rgba(255,255,255,0) 60%
+    );
+
+  transform:translateY(-40px);
+  opacity:0;
+  animation:shopLight 1.6s ease forwards;
+  mix-blend-mode:soft-light;
+}
+
+@keyframes shopLight{
+  0%   { opacity:0; transform:translateY(-60px); }
+  40%  { opacity:.55; transform:translateY(-10px); }
+  100% { opacity:.25; transform:translateY(0); }
+}
+
+/* niente luce in Listening Room */
+body.darkMode::after{ content:none; }
