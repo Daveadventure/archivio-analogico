@@ -1220,3 +1220,25 @@ body.darkMode{
 background:#0b0b0b !important;
 }
 
+
+
+/* ===== INNER SLEEVE FADE-IN ===== */
+
+body:not(.darkMode){
+
+animation:sleeveFade 1.2s ease;
+
+}
+
+@keyframes sleeveFade{
+
+0%{
+opacity:.0;
+}
+
+100%{
+opacity:1;
+}
+
+}
+
